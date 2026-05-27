@@ -1,0 +1,22 @@
+{
+  "name": "daily-briefing",
+  "version": "1.0.0",
+  "description": "每日新闻+AI简报 | 每天早上9点自动更新",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "fetch": "node scripts/fetch-rss.js",
+    "summarize": "node scripts/ai-summarize.js",
+    "audio": "node scripts/generate-audio.js",
+    "pipeline": "node scripts/fetch-rss.js && node scripts/ai-summarize.js && node scripts/generate-audio.js"
+  },
+  "keywords": ["news", "ai", "briefing", "podcast"],
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.99.0",
+    "astro": "^6.3.8",
+    "rss-parser": "^3.13.0"
+  }
+}

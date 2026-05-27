@@ -1,0 +1,93 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../components/Layout.astro';
+import NewsCard from '../components/NewsCard.astro';
+import AudioPlayer from '../components/AudioPlayer.astro';
+
+const briefings = await getCollection('briefings');
+const sorted = briefings.sort((a, b) => b.data.date.localeCompare(a.data.date));
+const latest = sorted[0];
+
+let briefingContent = null;
+if (latest) {
+  // Astro renders the MDX content via compiledContent()
+  // We parse the frontmatter and raw body
+  const { date, title } = latest.data;
+  const body = latest.body || '';
+
+  // Parse sections from markdown body
+  const sections: { label: string; items: { title: string; summary: string; url: string; sourceName: string }[] }[] = [];
+  let currentLabel = '';
+  let currentItems: typeof sections[0]['items'] = [];
+  let quoteText = '';
+
+  const lines = body.split('\n');
+  for (const line of lines) {
+    if (line.startsWith('## ')) {
+      if (currentLabel && currentItems.length > 0) {
+        sections.push({ label: currentLabel, items: currentItems });
+      }
+      currentLabel = line.replace('## ', '').trim();
+      currentItems = [];
+    } else if (line.match(/^\d+\.\s*\*\*\[/)) {
+      const titleMatch = line.match(/^\d+\.\s*\*\*\[(.+?)\]\*\*\s*—\s*(.+)/);
+      if (titleMatch) {
+        const linkMatch = titleMatch[2].match(/(.+?)\[阅读原文\]\((.+?)\)/);
+        const summary = linkMatch ? linkMatch[1].trim() : titleMatch[2].replace(/\[阅读原文\]\([^)]+\)/g, '').trim();
+        const url = linkMatch ? linkMatch[2] : '';
+        currentItems.push({ title: titleMatch[1].trim(), summary, url, sourceName: '' });
+      }
+    } else if (line.startsWith('> **今日金句')) {
+      const qMatch = line.match(/>\s*\*\*今日金句\*\*[：:]\s*(.+)/);
+      if (qMatch) quoteText = qMatch[1].trim();
+    }
+  }
+  if (currentLabel && currentItems.length > 0) {
+    sections.push({ label: currentLabel, items: currentItems });
+  }
+
+  // Determine audio URL
+  const audioFile = latest.data.audio || `/audio/${date}.mp3`;
+
+  briefingContent = { date, title, sections, quote: quoteText, audioUrl: audioFile };
+}
+---
+
+<Layout title={briefingContent?.title || '每日简报'}>
+  {
+    !briefingContent ? (
+      <div class="empty-state">
+        <div class="icon">📰</div>
+        <h2>暂无简报</h2>
+        <p>内容管线尚未生成任何简报。运行 pipeline 后这里将自动展示最新内容。</p>
+      </div>
+    ) : (
+      <>
+        <h1>{briefingContent.title}</h1>
+        <AudioPlayer audioUrl={briefingContent.audioUrl} date={briefingContent.date} />
+        {
+          briefingContent.sections.map(section => (
+            <section class="news-section">
+              <h2 class="section-header">{section.label}</h2>
+              {section.items.map(item => (
+                <NewsCard
+                  title={item.title}
+                  summary={item.summary}
+                  sourceName={item.sourceName || section.label}
+                  url={item.url || '#'}
+                />
+              ))}
+            </section>
+          ))
+        }
+        {
+          briefingContent.quote && (
+            <div class="daily-quote">
+              <strong>今日金句：</strong>{briefingContent.quote}
+            </div>
+          )
+        }
+      </>
+    )
+  }
+</Layout>

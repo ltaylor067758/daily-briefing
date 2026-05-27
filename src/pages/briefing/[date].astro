@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import NewsCard from '../../components/NewsCard.astro';
+import AudioPlayer from '../../components/AudioPlayer.astro';
+
+export async function getStaticPaths() {
+  const briefings = await getCollection('briefings');
+  return briefings.map(b => ({
+    params: { date: b.data.date },
+    props: { briefing: b },
+  }));
+}
+
+const { briefing } = Astro.props;
+const { date, title } = briefing.data;
+const body = briefing.body || '';
+
+// Parse sections (same logic as index.astro)
+const sections: { label: string; items: { title: string; summary: string; url: string; sourceName: string }[] }[] = [];
+let currentLabel = '';
+let currentItems: typeof sections[0]['items'] = [];
+let quoteText = '';
+
+const lines = body.split('\n');
+for (const line of lines) {
+  if (line.startsWith('## ')) {
+    if (currentLabel && currentItems.length > 0) {
+      sections.push({ label: currentLabel, items: currentItems });
+    }
+    currentLabel = line.replace('## ', '').trim();
+    currentItems = [];
+  } else if (line.match(/^\d+\.\s*\*\*\[/)) {
+    const titleMatch = line.match(/^\d+\.\s*\*\*\[(.+?)\]\*\*\s*—\s*(.+)/);
+    if (titleMatch) {
+      const linkMatch = titleMatch[2].match(/(.+?)\[阅读原文\]\((.+?)\)/);
+      const summary = linkMatch ? linkMatch[1].trim() : titleMatch[2].replace(/\[阅读原文\]\([^)]+\)/g, '').trim();
+      const url = linkMatch ? linkMatch[2] : '';
+      currentItems.push({ title: titleMatch[1].trim(), summary, url, sourceName: '' });
+    }
+  } else if (line.startsWith('> **今日金句')) {
+    const qMatch = line.match(/>\s*\*\*今日金句\*\*[：:]\s*(.+)/);
+    if (qMatch) quoteText = qMatch[1].trim();
+  }
+}
+if (currentLabel && currentItems.length > 0) {
+  sections.push({ label: currentLabel, items: currentItems });
+}
+---
+
+<Layout title={title}>
+  <h1>{title}</h1>
+  <AudioPlayer audioUrl={`/audio/${date}.mp3`} date={date} />
+
+  {
+    sections.map(section => (
+      <section class="news-section">
+        <h2 class="section-header">{section.label}</h2>
+        {section.items.map(item => (
+          <NewsCard
+            title={item.title}
+            summary={item.summary}
+            sourceName={item.sourceName || section.label}
+            url={item.url || '#'}
+          />
+        ))}
+      </section>
+    ))
+  }
+
+  {
+    quoteText && (
+      <div class="daily-quote">
+        <strong>今日金句：</strong>{quoteText}
+      </div>
+    )
+  }
+
+  <div style="margin-top: 2rem; text-align: center;">
+    <a href="/archive" style="font-family: var(--font-mono); font-size: 0.8rem;">&larr; 返回归档</a>
+  </div>
+</Layout>

@@ -1,0 +1,17 @@
+---
+export interface Props {
+  audioUrl: string;
+  date: string;
+}
+
+const { audioUrl, date } = Astro.props;
+---
+
+<div class="audio-player">
+  <span class="audio-label">&#9654; 语音播客</span>
+  <audio controls preload="none">
+    <source src={audioUrl} type="audio/mpeg" />
+    您的浏览器不支持音频播放。
+  </audio>
+  <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); white-space: nowrap;">{date}</span>
+</div>

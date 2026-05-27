@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../components/Layout.astro';
+
+const briefings = await getCollection('briefings');
+const sorted = briefings.sort((a, b) => b.data.date.localeCompare(a.data.date));
+---
+
+<Layout title="归档 · 每日简报">
+  <h1>📂 历史简报</h1>
+
+  {
+    sorted.length === 0 ? (
+      <div class="empty-state">
+        <div class="icon">📭</div>
+        <h2>暂无历史简报</h2>
+        <p>内容管线启动后，这里将按日期展示所有往期简报。</p>
+      </div>
+    ) : (
+      <ul class="archive-list">
+        {sorted.map(item => (
+          <li>
+            <span class="archive-date">{item.data.date}</span>
+            <a href={`/briefing/${item.data.date}`} class="archive-title">{item.data.title}</a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Layout>
