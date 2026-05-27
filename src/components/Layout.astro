@@ -1,4 +1,6 @@
 ---
+import '../styles/global.css';
+
 export interface Props {
   title?: string;
   description?: string;
@@ -7,6 +9,7 @@ export interface Props {
 const { title = '每日简报', description = '每天早上9点自动更新的时事+AI要闻简报' } = Astro.props;
 const currentYear = new Date().getFullYear();
 ---
+
 
 <!DOCTYPE html>
 <html lang="zh-CN">
