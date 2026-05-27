@@ -51,10 +51,19 @@ function cleanContent(str) {
     .trim();
 }
 
+function withTimeout(promise, ms, name) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error(`Timeout after ${ms}ms`)), ms)
+    ),
+  ]);
+}
+
 async function fetchOne(source) {
   try {
     console.log(`  [${source.name}] 抓取中...`);
-    const feed = await parser.parseURL(source.url);
+    const feed = await withTimeout(parser.parseURL(source.url), 12000, source.name);
 
     if (!feed || !feed.items || feed.items.length === 0) {
       console.log(`  [${source.name}] 无内容`);
@@ -86,9 +95,11 @@ async function main() {
   console.log(`时间: ${new Date().toISOString()}`);
   console.log(`共 ${RSS_SOURCES.length} 个源\n`);
 
-  // Step 1: 并发抓取所有源
-  const results = await Promise.all(
-    RSS_SOURCES.map(source => fetchOne(source))
+  // Step 1: 并发抓取所有源（全局 90 秒超时保护）
+  const results = await withTimeout(
+    Promise.all(RSS_SOURCES.map(source => fetchOne(source))),
+    90000,
+    'Global fetch'
   );
 
   let allArticles = results.flat();
