@@ -8,10 +8,9 @@ const briefings = await getCollection('briefings');
 const sorted = briefings.sort((a, b) => b.data.date.localeCompare(a.data.date));
 const latest = sorted[0];
 
-let briefingContent = null;
+let briefingContent: any = null;
+
 if (latest) {
-  // Astro renders the MDX content via compiledContent()
-  // We parse the frontmatter and raw body
   const { date, title } = latest.data;
   const body = latest.body || '';
 
@@ -20,36 +19,78 @@ if (latest) {
   let currentLabel = '';
   let currentItems: typeof sections[0]['items'] = [];
   let quoteText = '';
+  let itemIndex = 0;
 
   const lines = body.split('\n');
   for (const line of lines) {
-    if (line.startsWith('## ')) {
+    // Section header
+    if (line.match(/^##\s/)) {
       if (currentLabel && currentItems.length > 0) {
-        sections.push({ label: currentLabel, items: currentItems });
+        sections.push({ label: currentLabel, items: [...currentItems] });
       }
-      currentLabel = line.replace('## ', '').trim();
+      currentLabel = line.replace(/^##\s*/, '').trim();
       currentItems = [];
-    } else if (line.match(/^\d+\.\s*\*\*\[/)) {
-      const titleMatch = line.match(/^\d+\.\s*\*\*\[(.+?)\]\*\*\s*—\s*(.+)/);
-      if (titleMatch) {
-        const linkMatch = titleMatch[2].match(/(.+?)\[阅读原文\]\((.+?)\)/);
-        const summary = linkMatch ? linkMatch[1].trim() : titleMatch[2].replace(/\[阅读原文\]\([^)]+\)/g, '').trim();
-        const url = linkMatch ? linkMatch[2] : '';
-        currentItems.push({ title: titleMatch[1].trim(), summary, url, sourceName: '' });
+      continue;
+    }
+
+    // News item: "1. **[title]** — summary...[阅读原文](url)"
+    const itemMatch = line.match(/^\d+\.\s*\*\*\[(.+?)\]\*\*\s*[—\-]\s*(.+)/);
+    if (itemMatch) {
+      const itemTitle = itemMatch[1].trim();
+      const afterTitle = itemMatch[2];
+      let summary = '';
+      let url = '';
+
+      // Extract link: [阅读原文](url) or 阅读原文url
+      const linkMatch = afterTitle.match(/^(.*?)\[阅读原文\]\(([^)]+)\)/);
+      if (linkMatch) {
+        summary = linkMatch[1].replace(/\.{2,}$/, '').trim();
+        url = linkMatch[2].trim();
+      } else {
+        // Try bare URL at end
+        const bareMatch = afterTitle.match(/^(.*?)(https?:\/\/\S+)/);
+        if (bareMatch) {
+          summary = bareMatch[1].replace(/\.{2,}$/, '').trim();
+          url = bareMatch[2].trim();
+        } else {
+          summary = afterTitle.trim();
+        }
       }
-    } else if (line.startsWith('> **今日金句')) {
+
+      if (itemTitle && summary) {
+        itemIndex++;
+        currentItems.push({
+          title: itemTitle,
+          summary,
+          url,
+          sourceName: currentLabel,
+        });
+      }
+      continue;
+    }
+
+    // Quote
+    if (line.match(/^>\s*\*\*今日金句/)) {
       const qMatch = line.match(/>\s*\*\*今日金句\*\*[：:]\s*(.+)/);
       if (qMatch) quoteText = qMatch[1].trim();
+      continue;
     }
   }
+
+  // Don't forget the last section
   if (currentLabel && currentItems.length > 0) {
-    sections.push({ label: currentLabel, items: currentItems });
+    sections.push({ label: currentLabel, items: [...currentItems] });
   }
 
-  // Determine audio URL
   const audioFile = latest.data.audio || `/audio/${date}.mp3`;
-
   briefingContent = { date, title, sections, quote: quoteText, audioUrl: audioFile };
+}
+
+function formatDateChinese(dateStr: string): string {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
 }
 ---
 
@@ -57,24 +98,25 @@ if (latest) {
   {
     !briefingContent ? (
       <div class="empty-state">
-        <div class="icon">📰</div>
+        <div class="icon">&#9744;</div>
         <h2>暂无简报</h2>
-        <p>内容管线尚未生成任何简报。运行 pipeline 后这里将自动展示最新内容。</p>
+        <p>运行 pipeline 后这里将自动展示最新内容</p>
       </div>
     ) : (
       <>
-        <h1>{briefingContent.title}</h1>
+        <div class="date-badge">{formatDateChinese(briefingContent.date)} &middot; 晨间简报</div>
         <AudioPlayer audioUrl={briefingContent.audioUrl} date={briefingContent.date} />
         {
           briefingContent.sections.map(section => (
             <section class="news-section">
               <h2 class="section-header">{section.label}</h2>
-              {section.items.map(item => (
+              {section.items.map((item: any, i: number) => (
                 <NewsCard
+                  index={i + 1}
                   title={item.title}
                   summary={item.summary}
-                  sourceName={item.sourceName || section.label}
-                  url={item.url || '#'}
+                  sourceName={''}
+                  url={item.url}
                 />
               ))}
             </section>
@@ -83,7 +125,7 @@ if (latest) {
         {
           briefingContent.quote && (
             <div class="daily-quote">
-              <strong>今日金句：</strong>{briefingContent.quote}
+              <strong>今日金句</strong>&nbsp;&nbsp;{briefingContent.quote}
             </div>
           )
         }

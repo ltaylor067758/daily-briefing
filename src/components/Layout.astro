@@ -21,21 +21,18 @@ const currentYear = new Date().getFullYear();
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="alternate" type="application/rss+xml" title="每日简报 RSS" href="/rss.xml" />
   <title>{title} · 每日简报</title>
-  <style is:global>
-    /* Import CSS */
-  </style>
 </head>
 <body>
   <header class="site-header">
     <div class="container">
       <a href="/" class="site-logo">
-        &gt; daily_briefing<span class="dot">.</span>log
+        &gt; daily<span class="dot">_</span>briefing
       </a>
       <nav class="site-nav">
-        <a href="/">最新</a>
-        <a href="/archive">归档</a>
-        <a href="/rss.xml">RSS</a>
+        <a href="/">今日</a>
+        <a href="/archive">往期</a>
       </nav>
     </div>
   </header>
@@ -46,8 +43,7 @@ const currentYear = new Date().getFullYear();
 
   <footer class="site-footer">
     <div class="container">
-      <p>每天早上 9:00 (UTC+8) 自动更新 · 内容由 AI 聚合摘要 · 仅供参考</p>
-      <p>© {currentYear} Daily Briefing · Powered by RSS + AI + Edge TTS</p>
+      <p>每日 09:00 (UTC+8) 自动更新 &nbsp;·&nbsp; AI 摘要 &nbsp;·&nbsp; 仅供参考</p>
     </div>
   </footer>
 </body>

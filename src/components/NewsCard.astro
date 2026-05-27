@@ -1,5 +1,6 @@
 ---
 export interface Props {
+  index?: number;
   title: string;
   summary: string;
   sourceName: string;
@@ -7,29 +8,15 @@ export interface Props {
   pubDate?: string;
 }
 
-const { title, summary, sourceName, url, pubDate } = Astro.props;
-
-function formatDate(dateStr?: string): string {
-  if (!dateStr) return '';
-  try {
-    const d = new Date(dateStr);
-    return d.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-  } catch {
-    return '';
-  }
-}
-
-const formattedDate = formatDate(pubDate);
+const { index, title, summary, sourceName, url, pubDate } = Astro.props;
+const hasUrl = url && url.length > 1 && url !== '#';
 ---
 
 <article class="news-card">
+  {index && <span class="index">{String(index).padStart(2, '0')}</span>}
   <h3>
-    <a href={url} target="_blank" rel="noopener noreferrer">{title}</a>
+    {hasUrl ? <a href={url} target="_blank" rel="noopener noreferrer">{title}</a> : title}
   </h3>
+  <span class="source-name">{sourceName}</span>
   <p class="summary">{summary}</p>
-  <div class="meta">
-    <span>{sourceName}</span>
-    {formattedDate && <span>{formattedDate}</span>}
-  </div>
-  <a href={url} class="source-link" target="_blank" rel="noopener noreferrer">阅读原文 &rarr;</a>
 </article>

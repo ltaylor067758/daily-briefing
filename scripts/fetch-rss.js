@@ -70,6 +70,9 @@ async function fetchOne(source) {
       return [];
     }
 
+    const now = Date.now();
+    const maxAgeMs = (FETCH_CONFIG.maxAgeHours || 36) * 60 * 60 * 1000;
+
     const articles = feed.items
       .map(item => ({
         title: (item.title || '').trim(),
@@ -80,9 +83,14 @@ async function fetchOne(source) {
         category: source.category,
         lang: source.lang,
       }))
-      .filter(a => a.title.length > 0 && a.summary.length >= FETCH_CONFIG.minContentLength);
+      .filter(a => a.title.length > 0 && a.summary.length >= FETCH_CONFIG.minContentLength)
+      .filter(a => {
+        const age = now - new Date(a.pubDate).getTime();
+        return age <= maxAgeMs;
+      });
 
-    console.log(`  [${source.name}] ✓ ${articles.length} 条`);
+    const oldCount = feed.items ? feed.items.length - articles.length : 0;
+    console.log(`  [${source.name}] ✓ ${articles.length} 条 (过滤 ${oldCount} 条旧闻)`);
     return articles;
   } catch (err) {
     console.error(`  [${source.name}] ✗ 失败: ${err.message}`);

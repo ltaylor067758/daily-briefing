@@ -12,11 +12,19 @@
     "audio": "node scripts/generate-audio.js",
     "pipeline": "node scripts/fetch-rss.js && node scripts/ai-summarize.js && node scripts/generate-audio.js"
   },
-  "keywords": ["news", "ai", "briefing", "podcast"],
+  "keywords": [
+    "news",
+    "ai",
+    "briefing",
+    "podcast"
+  ],
   "license": "MIT",
   "dependencies": {
     "@anthropic-ai/sdk": "^0.99.0",
     "astro": "^6.3.8",
     "rss-parser": "^3.13.0"
+  },
+  "devDependencies": {
+    "libsodium-wrappers": "^0.8.4"
   }
 }

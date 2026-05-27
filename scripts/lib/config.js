@@ -1,6 +1,6 @@
 // ===== RSS 源配置 =====
-// 注意：部分国际源（Reuters/BBC/AP/Al Jazeera/The Guardian）在本地可能因网络原因超时，
-// 但在 GitHub Actions (美国服务器) 上正常运行。
+// 注意：部分国际源在执行环境中可能超时（网络限制），
+// 脚本内置超时保护，单源超时不影响其他源。
 
 export const RSS_SOURCES = [
   // --- 国内新闻（中文） ---
@@ -25,16 +25,20 @@ export const RSS_SOURCES = [
 
 // ===== AI Prompt 配置 =====
 
-export const SUMMARIZE_SYSTEM_PROMPT = `你是一位资深的中文新闻编辑，负责从当天抓取的新闻中筛选并生成每日简报。
+export const SUMMARIZE_SYSTEM_PROMPT = `你是一位资深的中文新闻编辑。请从以下当天抓取的新闻列表中，筛选并生成今日简报。
 
-## 你的任务
-1. 从提供的新闻列表中，筛选最重要的 5-10 条时事新闻（国内+国际各半）和 3-5 条 AI/科技新闻
-2. 每条新闻用 1-2 句话概括核心内容，中文输出
-3. 英文新闻需翻译为流畅的中文
-4. 保留原文链接
-5. 在简报末尾生成一条"今日金句"（可以是新闻中提炼的有洞察力的观点）
+## 重要限制
+- **只选择今天（24小时内）发布的新闻**，跳过任何发布时间超过24小时的内容
+- 时效性是第一优先级的筛选标准
 
-## 输出格式（严格按此 Markdown 结构）
+## 任务
+1. 筛选最重要的 5-8 条时事新闻（国内+国际各半）和 3-5 条 AI/科技新闻
+2. 每条新闻用 **1 句话**（不超过 40 字）概括核心内容，中文输出
+3. 英文新闻翻译为流畅中文
+4. **必须保留原文链接**
+5. 在简报末尾生成一条"今日金句"
+
+## 输出格式（严格按照此 Markdown 结构）
 ---
 date: YYYY-MM-DD
 title: 每日简报 YYYY年M月D日
@@ -44,45 +48,46 @@ title: 每日简报 YYYY年M月D日
 
 ## 🇨🇳 国内要闻
 
-1. **[新闻标题]** — 摘要内容，简明扼要...[阅读原文](URL)
+1. **[标题]** — 一句话摘要...[阅读原文](URL)
 2. ...
 
 ## 🌍 国际要闻
 
-1. **[新闻标题]** — 摘要内容，简明扼要...[阅读原文](URL)
+1. **[标题]** — 一句话摘要...[阅读原文](URL)
 
 ## 🤖 AI 与科技
 
-1. **[新闻标题]** — 摘要内容，简明扼要...[阅读原文](URL)
+1. **[标题]** — 一句话摘要...[阅读原文](URL)
 
 ---
 
 > **今日金句**：...
 
-## 注意事项
-- 优先选择有实质内容、读者会关心的新闻，跳过琐碎八卦
-- 标题要抓住核心，不要翻译腔
-- 国内/国际新闻控制在 5-10 条，AI 新闻 3-5 条
-- 简报整体要有"一读就懂今天发生什么"的感觉`;
+## 输出规则
+- 每个条目独占一行，不要换行
+- 链接格式必须是 [阅读原文](完整URL)
+- 摘要控制在40字以内
+- 跳过八卦、广告、软文`;
 
 // ===== TTS 配置 =====
 
 export const TTS_CONFIG = {
-  maleVoice: 'zh-CN-YunxiNeural',    // 男声
-  femaleVoice: 'zh-CN-XiaoxiaoNeural', // 女声
-  rate: '+10%',   // 语速稍快
+  maleVoice: 'zh-CN-YunxiNeural',
+  femaleVoice: 'zh-CN-XiaoxiaoNeural',
+  rate: '+10%',
   outputDir: 'public/audio',
 };
 
 // ===== 抓取配置 =====
 
 export const FETCH_CONFIG = {
-  timeout: 15000,         // 单源超时 ms
+  timeout: 12000,         // 单源超时 ms
+  maxAgeHours: 36,        // 只保留最近 N 小时内的新闻
   maxItemsPerCategory: {
-    domestic: 15,         // 抓取时不过度限制，留给 AI 筛选
+    domestic: 15,
     international: 15,
     ai: 10,
   },
-  dedupeThreshold: 0.6,  // 标题相似度阈值 (Jaccard)
-  minContentLength: 15,  // 最短摘要字符数
+  dedupeThreshold: 0.6,
+  minContentLength: 15,
 };
