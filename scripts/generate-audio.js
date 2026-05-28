@@ -111,9 +111,6 @@ function buildConversation(briefing, dateChinese) {
         add(F, fVoice, pick(connectors));
         add(M, mVoice, `${item.title}。${item.summary}`);
       }
-      if (i < top.length - 1) {
-        add(F, fVoice, pick(['嗯，这条信息量不小。', '了解。', '明白了，继续。', '好的，那下一条呢？']));
-      }
     }
 
     const rest = domestic.items.slice(3);
@@ -152,7 +149,7 @@ function buildConversation(briefing, dateChinese) {
         ];
         add(M, mVoice, pick(intros));
       }
-      if (i < top.length - 1) {
+      if (i > 0 && i < top.length - 1) {
         add(F, fVoice, pick(['嗯，国际局势确实复杂。', '这影响面挺广的。', '了解。继续。']));
       }
     }
