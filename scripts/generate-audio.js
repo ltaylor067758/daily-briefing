@@ -75,14 +75,13 @@ function buildConversation(briefing, dateChinese) {
 
   // ===== 开场 =====
   const pickOpen = createPicker([
-    `嘿，早上好。今天是${dateChinese}，欢迎收听每日简报。我是云希。`,
-    `各位听众朋友们好，${dateChinese}，又到了每日简报的时间。我是云希。`,
-    `大家好，${dateChinese}，每日简报准时和你见面。我是云希。`,
-    `早上好！${dateChinese}，每日简报如约而至。我是云希。`,
-    `各位好，今天是${dateChinese}，欢迎来到每日简报。我是云希。`,
+    `嘿，早上好。今天是${dateChinese}，欢迎收听七尺的每日新闻播客。`,
+    `各位听众朋友们好，${dateChinese}，欢迎收听七尺的每日新闻播客。`,
+    `大家好，${dateChinese}，七尺的每日新闻播客准时和你见面。`,
+    `早上好！${dateChinese}，欢迎来到七尺的每日新闻播客。`,
+    `各位好，今天是${dateChinese}，七尺每日新闻播客如约而至。`,
   ]);
   add(M, mVoice, pickOpen());
-  add(F, fVoice, '我是小晓。');
   const pickChat = createPicker([
     '今天新闻不少，咱们捡重点的聊聊。',
     '今天有不少值得关注的消息，咱们挑重点说。',
@@ -90,7 +89,7 @@ function buildConversation(briefing, dateChinese) {
     '今天内容挺丰富的，捡有意思的说。',
     '今天热点挺多，咱们一个一个来。',
   ]);
-  add(M, mVoice, pickChat());
+  add(F, fVoice, pickChat());
   const pickStyle = createPicker([
     '对，不念稿，就挑几个最有意思的说说。',
     '没错，挑几个真正值得展开的聊一聊。',
@@ -289,13 +288,11 @@ function buildConversation(briefing, dateChinese) {
   ]);
   add(M, mVoice, pickEnd());
   add(F, fVoice, '每天早上九点，我们准时更新。想看完整文字版可以访问我们的网站。');
-  add(M, mVoice, '我是云希。');
-  add(F, fVoice, '我是小晓。');
   const pickBye = createPicker([
     '明天见！', '下期见！', '明天同一时间，不见不散！',
     '咱们明天继续！', '明天见，拜拜！',
   ]);
-  add(M, mVoice, pickBye());
+  add(F, fVoice, pickBye());
 
   return s;
 }
@@ -348,10 +345,12 @@ async function main() {
     const line = script[i];
     const segFile = join(tmpDir, `${String(i + 1).padStart(3, '0')}.mp3`);
     const safeText = line.text.replace(/"/g, '\\"').replace(/`/g, '\\`').replace(/\$/g, '\\$');
+    // 男声女声用不同音高，区分度更明显；语速稍慢更自然
+    const pitch = line.voice === TTS_CONFIG.maleVoice ? '-2Hz' : '+2Hz';
 
     try {
       execSync(
-        `edge-tts --voice ${line.voice} --text "${safeText}" --write-media "${segFile}"`,
+        `edge-tts --voice ${line.voice} --rate "${TTS_CONFIG.rate}" --pitch "${pitch}" --text "${safeText}" --write-media "${segFile}"`,
         { stdio: 'pipe', timeout: 30000 }
       );
       segmentFiles.push(segFile);
