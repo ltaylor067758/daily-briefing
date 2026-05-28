@@ -8,26 +8,16 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(__dirname, '..', 'src', 'content', 'briefings');
 const AUDIO_DIR = join(__dirname, '..', 'public', 'audio');
 
-// 用 SSML 包裹文本，加入情感风格和韵律控制，让声音像真人聊天
-function buildSSML(text, voice, style) {
+// 用 SSML 包裹文本，控制语速和音高，让声音不再机械
+function buildSSML(text, voice) {
   const escaped = text
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;').replace(/'/g, '&apos;');
   const rate = TTS_CONFIG.rate;
-  // 不同的情感风格对应不同的表达方式
-  const styleMap = {
-    chat: { style: 'chat', degree: 1.3 },
-    friendly: { style: 'friendly', degree: 1.5 },
-    excited: { style: 'excited', degree: 1.2 },
-    serious: { style: 'newscast-casual', degree: 1.0 },
-    calm: { style: 'calm', degree: 1.0 },
-  };
-  const s = styleMap[style] || styleMap.chat;
-  return `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="zh-CN">
+  const pitch = voice === TTS_CONFIG.maleVoice ? '-3Hz' : '+3Hz';
+  return `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="zh-CN">
 <voice name="${voice}">
-<mstts:express-as style="${s.style}" styledegree="${s.degree}">
-<prosody rate="${rate}" pitch="+0Hz">${escaped}</prosody>
-</mstts:express-as>
+<prosody rate="${rate}" pitch="${pitch}">${escaped}</prosody>
 </voice>
 </speak>`;
 }
@@ -368,19 +358,17 @@ async function main() {
   for (let i = 0; i < script.length; i++) {
     const line = script[i];
     const segFile = join(tmpDir, `${String(i + 1).padStart(3, '0')}.mp3`);
-    // 根据内容猜情绪：开场/结束用 friendly，国际新闻用 serious，其他用 chat
-    let mood = 'chat';
-    if (i === 0 || i === 1 || i >= script.length - 3) mood = 'friendly';
-    else if (line.text.includes('国际') || line.text.includes('冲突') || line.text.includes('袭击') || line.text.includes('死亡')) mood = 'serious';
-    else if (line.text.includes('兴奋') || line.text.includes('重磅') || line.text.includes('AI') || line.text.includes('科技')) mood = 'chat';
+    const ssml = buildSSML(line.text, line.voice);
 
-    const ssml = buildSSML(line.text, line.voice, mood);
-    const ssmlFile = join(tmpDir, `${String(i + 1).padStart(3, '0')}.xml`);
+    // 写 SSML 到临时文件，Python 一行命令读取并合成
+    const ssmlFile = join(tmpDir, `${String(i + 1).padStart(3, '0')}.ssml`);
+    const ssmlUnix = ssmlFile.replace(/\\/g, '/');
+    const segUnix = segFile.replace(/\\/g, '/');
     writeFileSync(ssmlFile, ssml, 'utf-8');
 
     try {
       execSync(
-        `python "${join(__dirname, 'tts-ssml.py')}" "${line.voice}" "${ssmlFile}" "${segFile}"`,
+        `python -c "import sys,asyncio;from edge_tts import Communicate;asyncio.run(Communicate(ssml=open(r'${ssmlUnix}','r',encoding='utf-8').read(),voice=r'${line.voice}').save(r'${segUnix}'))"`,
         { stdio: 'pipe', timeout: 30000 }
       );
       segmentFiles.push(segFile);
