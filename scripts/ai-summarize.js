@@ -37,11 +37,13 @@ function formatArticlesForPrompt(articles) {
 
 async function callAI(articles) {
   const articlesText = formatArticlesForPrompt(articles);
-  const userPrompt = `以下是今天抓取的新闻列表。请按照系统指令中的要求，筛选并生成今日简报。
+  const todayDate = getTodayDate();
+  const todayChinese = getTodayChinese();
+  const userPrompt = `今天是 ${todayDate}（${todayChinese}）。以下是今天抓取的新闻列表。请严格按照系统指令中的要求，筛选并生成今日简报。
 
 ${articlesText}
 
-请严格按系统指令中的 Markdown 格式输出今日简报。`;
+请严格按系统指令中的 Markdown 格式输出今日简报。注意：标题和date字段必须使用 ${todayDate} 和 ${todayChinese}。`;
 
   console.log(`发送 ${articles.length} 条新闻给 AI...`);
   console.log(`Prompt 长度: ${userPrompt.length} 字符`);
@@ -98,13 +100,17 @@ async function main() {
     markdown = generateFallbackBriefing(raw.articles);
   }
 
-  // 替换日期占位符
+  // 强制修正日期：无论AI输出什么日期，都覆盖为今天的正确日期
   const dateStr = getTodayDate();
   const dateChinese = getTodayChinese();
   markdown = markdown
-    .replace(/\bdate:\s*YYYY-MM-DD\b/g, `date: "${dateStr}"`)
-    .replace(/\bdate:\s*(\d{4}-\d{2}-\d{2})\b/g, 'date: "$1"')  // 引号保护，防止YAML转为Date对象
+    // 1. 强制覆盖 frontmatter 中的 date 字段
+    .replace(/^date:\s*.+$/m, `date: "${dateStr}"`)
+    // 2. YYYY-MM-DD 占位符兜底
     .replace(/YYYY-MM-DD/g, dateStr)
+    // 3. 标题中的任何中文日期格式，统一替换为今天
+    .replace(/\d{4}年\d{1,2}月\d{1,2}日/g, dateChinese)
+    // 4. YYYY年M月D日 占位符兜底
     .replace(/YYYY年M月D日/g, dateChinese);
 
   // 确保输出目录存在
@@ -130,12 +136,14 @@ function generateFallbackBriefing(articles) {
     { key: 'ai', label: '🤖 AI 与科技' },
   ];
 
+  const todayDate = getTodayDate();
+  const todayChinese = getTodayChinese();
   let md = `---
-date: YYYY-MM-DD
-title: 每日简报 YYYY年M月D日
+date: "${todayDate}"
+title: 每日简报 ${todayChinese}
 ---
 
-# 每日简报 · YYYY年M月D日
+# 每日简报 · ${todayChinese}
 
 `;
 
