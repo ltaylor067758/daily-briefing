@@ -367,8 +367,9 @@ async function main() {
     writeFileSync(ssmlFile, ssml, 'utf-8');
 
     try {
+      // Python subprocess: 读 SSML 文件 → 直接传给 edge-tts CLI，不走 shell 转义
       execSync(
-        `python -c "import sys,asyncio;from edge_tts import Communicate;asyncio.run(Communicate(ssml=open(r'${ssmlUnix}','r',encoding='utf-8').read(),voice=r'${line.voice}').save(r'${segUnix}'))"`,
+        `python -c "import subprocess;f=open(r'${ssmlUnix}','r',encoding='utf-8');s=f.read();f.close();subprocess.run(['edge-tts','--voice',r'${line.voice}','--ssml',s,'--write-media',r'${segUnix}'],check=True)"`,
         { stdio: 'pipe', timeout: 30000 }
       );
       segmentFiles.push(segFile);
