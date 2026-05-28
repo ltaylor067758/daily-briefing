@@ -1,0 +1,5 @@
+<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="zh-CN">
+<voice name="zh-CN-YunxiNeural">
+<prosody rate="-5%" pitch="-3Hz">嘿，早上好。今天是2026年5月28日，欢迎收听七尺的每日新闻播客。</prosody>
+</voice>
+</speak>

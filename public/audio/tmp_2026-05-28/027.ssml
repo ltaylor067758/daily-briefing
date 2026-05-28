@@ -1,0 +1,5 @@
+<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="zh-CN">
+<voice name="zh-CN-YunxiNeural">
+<prosody rate="-5%" pitch="-3Hz">今天想跟大家分享的一句话：当AI同时走进考场、手术室、工厂和厨房，人类真正的对手从来不是机器，而是自己对变化的迟疑。</prosody>
+</voice>
+</speak>
