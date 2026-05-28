@@ -1,0 +1,7 @@
+<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="zh-CN">
+<voice name="zh-CN-YunyangNeural">
+<mstts:express-as style="newscast-casual" styledegree="1">
+<prosody rate="-5%" pitch="+0Hz">此外值得注意的还有。以色列袭击加沙城致至少10死，以军对加沙城发动猛烈空袭，遇难者中包含4名儿童，逾20人受伤</prosody>
+</mstts:express-as>
+</voice>
+</speak>
