@@ -1,5 +1,5 @@
 <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="zh-CN">
 <voice name="zh-CN-XiaoxiaoNeural">
-<prosody rate="-5%" pitch="+3Hz">还有别的吗？</prosody>
+<prosody rate="-5%" pitch="+3Hz">还有哪些值得关注的？</prosody>
 </voice>
 </speak>
