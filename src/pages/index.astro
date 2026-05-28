@@ -106,6 +106,7 @@ function formatDateChinese(dateStr: string): string {
       <>
         <div class="date-badge">{formatDateChinese(briefingContent.date)} &middot; 晨间简报</div>
         <AudioPlayer audioUrl={briefingContent.audioUrl} date={briefingContent.date} />
+        <div class="news-grid">
         {
           briefingContent.sections.map(section => (
             <section class="news-section">
@@ -122,6 +123,7 @@ function formatDateChinese(dateStr: string): string {
             </section>
           ))
         }
+        </div>
         {
           briefingContent.quote && (
             <div class="daily-quote">
