@@ -27,23 +27,33 @@ function checkDeps() {
 }
 
 function parseBriefing(mdContent) {
-  // 解析简报，提取结构化数据
   const sections = [];
   let currentSection = null;
   let currentItems = [];
   let quote = '';
+  let pendingDiscussion = '';
 
-  for (const line of mdContent.split('\n')) {
+  const lines = mdContent.split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
     if (line.startsWith('## ')) {
       if (currentSection) sections.push({ title: currentSection, items: currentItems });
       currentSection = line.replace('## ', '').trim();
       currentItems = [];
     }
+    // Check for discussion comment on its own line
+    const dMatch = line.match(/<!--\s*discuss:\s*(.+?)\s*-->/);
+    if (dMatch) {
+      pendingDiscussion = dMatch[1].trim();
+      continue;
+    }
     const itemMatch = line.match(/^\d+\.\s*\*\*\[?(.+?)\]?\*\*\s*[—\-]\s*(.+)/);
     if (itemMatch) {
       let summary = itemMatch[2].trim();
       summary = summary.replace(/\.{2,}\[阅读原文\]\([^)]+\)/, '').replace(/\[阅读原文\]\([^)]+\)/g, '').replace(/\*+/g, '').trim();
-      currentItems.push({ title: itemMatch[1].trim(), summary });
+      const title = itemMatch[1].trim();
+      currentItems.push({ title, summary, discussion: pendingDiscussion });
+      pendingDiscussion = '';
     }
     if (line.match(/^>\s*\*\*今日金句/)) {
       const qMatch = line.match(/>\s*\*\*今日金句\*\*[：:]\s*(.+)/);
@@ -83,21 +93,14 @@ function buildConversation(briefing, dateChinese) {
   ]);
   add(M, mVoice, pickOpen());
   const pickChat = createPicker([
-    '今天新闻不少，咱们捡重点的聊聊。',
-    '今天有不少值得关注的消息，咱们挑重点说。',
-    '今天信息量挺大，咱们慢慢聊。',
-    '今天内容挺丰富的，捡有意思的说。',
-    '今天热点挺多，咱们一个一个来。',
+    '今天信息量不小，咱们慢慢来。',
+    '今天有不少值得关注的消息。',
+    '今天热点挺密集的，咱们一块看看。',
+    '今天内容挺丰富的，来。',
+    '今天有几条新闻挺有聊头的。',
   ]);
   add(F, fVoice, pickChat());
-  const pickStyle = createPicker([
-    '对，不念稿，就挑几个最有意思的说说。',
-    '没错，挑几个真正值得展开的聊一聊。',
-    '对，不追求数量，聊透几个热点就好。',
-    '对，咱们聊新闻，不是念新闻。',
-    '没错，深度的聊比泛泛的念更有意思。',
-  ]);
-  add(M, mVoice, pickStyle());
+  add(M, mVoice, '先从国内开始吧。');
 
   // ===== 国内要闻 =====
   const domestic = sections.find(sec => sec.title.includes('国内'));
@@ -124,17 +127,17 @@ function buildConversation(briefing, dateChinese) {
       '这条信息量不小，展开说说？',
     ]);
     const pickAnalyze = createPicker([
-      '我觉得背后反映了一个趋势，政策在往更规范、更透明的方向走。',
-      '其实仔细想想，这说明市场在逐渐成熟，规则意识越来越强了。',
-      '我认为这件事的信号意义很大，后续可能会有更多配套措施出来。',
-      '这件事的影响可能会持续一段时间，值得继续观察。',
-      '从更大的视角看，这其实是一个良性信号，说明整个体系在进步。',
-      '我个人觉得这事儿挺积极的，方向是对的。',
+      '这个趋势如果持续下去，影响面可能比表面看起来更大。',
+      '有意思。这让我想到最近的一系列变化，似乎都在往同一个方向走。',
+      '这事儿的关键点其实不在于事件本身，而是它释放的信号。',
+      '我倒觉得这背后反映了一个更大的变化。',
+      '这件事的连锁反应可能会持续一段时间。',
+      '换个角度看，这其实是个积极信号。',
     ]);
     const pickNext = createPicker([
-      '还有一条也挺重要的。', '另外值得一提的还有。', '再来看这条。',
-      '我这儿还有一条。', '下一条也挺有意思的。', '接着说。',
-      '下一个。', '咱们接着看。', '还有一条值得说的。', '再往下看。',
+      '还有一条也挺重要的。', '另外值得一提的还有。',
+      '再来看这条。', '下一条也挺有意思的。',
+      '接着说。', '咱们接着看。',
     ]);
 
     for (let i = 0; i < top.length; i++) {
@@ -142,10 +145,12 @@ function buildConversation(briefing, dateChinese) {
       if (i === 0) {
         add(M, mVoice, pickLead().replace('{title}', item.title).replace('{summary}', item.summary));
         add(F, fVoice, pickReact());
-        add(M, mVoice, pickAnalyze());
+        add(M, mVoice, item.discussion || pickAnalyze());
       } else {
         add(F, fVoice, pickNext());
-        add(M, mVoice, `${item.title}。${item.summary}`);
+        const intro = `${item.title}。${item.summary}`;
+        const extra = item.discussion ? ` ${item.discussion}` : '';
+        add(M, mVoice, intro + extra);
       }
     }
 
@@ -202,10 +207,11 @@ function buildConversation(briefing, dateChinese) {
       const item = top[i];
       if (i === 0) {
         add(M, mVoice, pickIntlLead().replace('{title}', item.title).replace('{summary}', item.summary));
+        if (item.discussion) { add(F, fVoice, item.discussion); }
         if (top.length > 1) { add(F, fVoice, pickAskMore()); }
       } else {
         const intro = pickIntlNext().replace('{title}', item.title).replace('{summary}', item.summary);
-        add(M, mVoice, intro);
+        add(M, mVoice, intro + (item.discussion ? ` ${item.discussion}` : ''));
       }
       if (i > 0 && i < top.length - 1) { add(F, fVoice, pickIntlReact()); }
     }
@@ -254,13 +260,17 @@ function buildConversation(briefing, dateChinese) {
       const item = top[i];
       if (i === 0) {
         add(M, mVoice, pickAiLead().replace('{title}', item.title).replace('{summary}', item.summary));
-        if (top.length === 1) { add(F, fVoice, pickAiWow()); }
+        if (item.discussion) {
+          add(F, fVoice, item.discussion);
+        } else if (top.length === 1) {
+          add(F, fVoice, pickAiWow());
+        }
       } else if (i === 1) {
         add(F, fVoice, pickAiNext());
-        add(M, mVoice, `${item.title}。说白了就是${item.summary}`);
+        add(M, mVoice, `${item.title}。说白了就是${item.summary}${item.discussion ? ' ' + item.discussion : ''}`);
       } else {
         add(F, fVoice, pickAiLast());
-        add(M, mVoice, `${item.title}。${item.summary}`);
+        add(M, mVoice, `${item.title}。${item.summary}${item.discussion ? ' ' + item.discussion : ''}`);
       }
     }
   }
@@ -355,35 +365,45 @@ async function main() {
     execSync(`rm -f "${outputFile}"`, { stdio: 'pipe' });
   }
 
-  console.log(`生成 ${script.length} 个音频片段...`);
+  console.log(`生成 ${script.length} 个音频片段（SSML chat 风格）...`);
   const segmentFiles = [];
 
-  for (let i = 0; i < script.length; i++) {
-    const line = script[i];
+  // 构建批量 JSON
+  const batchItems = script.map((line, i) => {
     const segFile = join(tmpDir, `${String(i + 1).padStart(3, '0')}.mp3`);
-    const safeText = line.text.replace(/"/g, '\\"').replace(/`/g, '\\`').replace(/\$/g, '\\$');
-    const pitch = line.voice === TTS_CONFIG.maleVoice ? '-3Hz' : '+3Hz';
+    segmentFiles.push(segFile);
+    return {
+      id: `${i + 1}/${script.length}`,
+      voice: line.voice,
+      text: line.text,
+      output: segFile,
+      rate: TTS_CONFIG.rate,
+      pitch: line.voice === TTS_CONFIG.maleVoice ? '-3Hz' : '+3Hz',
+    };
+  });
 
-    try {
-      execSync(
-        `edge-tts --voice ${line.voice} --rate=${TTS_CONFIG.rate} --pitch=${pitch} --text "${safeText}" --write-media "${segFile}"`,
-        { stdio: 'pipe', timeout: 30000 }
-      );
-      segmentFiles.push(segFile);
-      console.log(`  [${i + 1}/${script.length}] ✓ ${line.speaker}`);
-    } catch (err) {
-      console.error(`  [${i + 1}/${script.length}] ✗: ${err.message}`);
-    }
+  const batchFile = join(tmpDir, 'batch.json');
+  writeFileSync(batchFile, JSON.stringify(batchItems, null, 2), 'utf-8');
+
+  try {
+    const ttsScript = join(__dirname, 'tts-batch.py');
+    execSync(`python "${ttsScript}" "${batchFile}"`, { stdio: 'inherit', timeout: 180000 });
+  } catch (err) {
+    console.error('SSML 批量合成出错:', err.message);
   }
 
-  if (segmentFiles.length === 0) {
+  // 验证哪些片段实际成功生成了
+  const okFiles = segmentFiles.filter(f => existsSync(f));
+  console.log(`成功: ${okFiles.length}/${segmentFiles.length} 个片段`);
+
+  if (okFiles.length === 0) {
     console.error('没有成功生成任何片段');
     return;
   }
 
-  // ffmpeg 拼接
+  // ffmpeg 拼接（只拼接实际存在的文件）
   const concatFile = join(tmpDir, 'concat.txt');
-  writeFileSync(concatFile, segmentFiles.map(f => `file '${f.replace(/\\/g, '/')}'`).join('\n'), 'utf-8');
+  writeFileSync(concatFile, okFiles.map(f => `file '${f.replace(/\\/g, '/')}'`).join('\n'), 'utf-8');
 
   console.log('拼接音频...');
   execSync(`ffmpeg -f concat -safe 0 -i "${concatFile}" -c copy "${outputFile}" -y`, {
