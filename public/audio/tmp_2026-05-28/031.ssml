@@ -1,5 +1,5 @@
 <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="zh-CN">
 <voice name="zh-CN-XiaoxiaoNeural">
-<prosody rate="-5%" pitch="+3Hz">明天见！</prosody>
+<prosody rate="-5%" pitch="+3Hz">下期见！</prosody>
 </voice>
 </speak>

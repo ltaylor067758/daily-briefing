@@ -1,5 +1,5 @@
 <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="zh-CN">
 <voice name="zh-CN-XiaoxiaoNeural">
-<prosody rate="-5%" pitch="+3Hz">今天热点挺多，咱们一个一个来。</prosody>
+<prosody rate="-5%" pitch="+3Hz">今天内容挺丰富的，捡有意思的说。</prosody>
 </voice>
 </speak>
