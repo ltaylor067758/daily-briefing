@@ -347,10 +347,27 @@ async function main() {
     return;
   }
 
+  // ===== 自检：确保 edge-tts 工作正常 =====
+  console.log('自检 edge-tts...');
+  try {
+    execSync(`edge-tts --voice ${TTS_CONFIG.femaleVoice} --text "测试" --write-media /tmp/tts_test.mp3 --rate "-5%"`, { stdio: 'pipe', timeout: 15000 });
+    console.log('  ✓ edge-tts 工作正常');
+  } catch (err) {
+    console.error('  ✗ edge-tts 自检失败:', err.message);
+    return;
+  }
+
   // 生成音频
   if (!existsSync(AUDIO_DIR)) mkdirSync(AUDIO_DIR, { recursive: true });
   const tmpDir = join(AUDIO_DIR, 'tmp_' + dateStr);
   mkdirSync(tmpDir, { recursive: true });
+
+  // 先删掉旧音频，确保不会被错误提交
+  const outputFile = join(AUDIO_DIR, `${dateStr}.mp3`);
+  if (existsSync(outputFile)) {
+    console.log('删除旧音频文件...');
+    execSync(`rm -f "${outputFile}"`, { stdio: 'pipe' });
+  }
 
   console.log(`生成 ${script.length} 个音频片段...`);
   const segmentFiles = [];
@@ -358,18 +375,12 @@ async function main() {
   for (let i = 0; i < script.length; i++) {
     const line = script[i];
     const segFile = join(tmpDir, `${String(i + 1).padStart(3, '0')}.mp3`);
-    const ssml = buildSSML(line.text, line.voice);
-
-    // 写 SSML 到临时文件，Python 一行命令读取并合成
-    const ssmlFile = join(tmpDir, `${String(i + 1).padStart(3, '0')}.ssml`);
-    const ssmlUnix = ssmlFile.replace(/\\/g, '/');
-    const segUnix = segFile.replace(/\\/g, '/');
-    writeFileSync(ssmlFile, ssml, 'utf-8');
+    const safeText = line.text.replace(/"/g, '\\"').replace(/`/g, '\\`').replace(/\$/g, '\\$');
+    const pitch = line.voice === TTS_CONFIG.maleVoice ? '-3Hz' : '+3Hz';
 
     try {
-      // Python subprocess: 读 SSML 文件 → 直接传给 edge-tts CLI，不走 shell 转义
       execSync(
-        `python -c "import subprocess;f=open(r'${ssmlUnix}','r',encoding='utf-8');s=f.read();f.close();subprocess.run(['edge-tts','--voice',r'${line.voice}','--ssml',s,'--write-media',r'${segUnix}'],check=True)"`,
+        `edge-tts --voice ${line.voice} --rate "${TTS_CONFIG.rate}" --pitch "${pitch}" --text "${safeText}" --write-media "${segFile}"`,
         { stdio: 'pipe', timeout: 30000 }
       );
       segmentFiles.push(segFile);
@@ -388,7 +399,6 @@ async function main() {
   const concatFile = join(tmpDir, 'concat.txt');
   writeFileSync(concatFile, segmentFiles.map(f => `file '${f.replace(/\\/g, '/')}'`).join('\n'), 'utf-8');
 
-  const outputFile = join(AUDIO_DIR, `${dateStr}.mp3`);
   console.log('拼接音频...');
   execSync(`ffmpeg -f concat -safe 0 -i "${concatFile}" -c copy "${outputFile}" -y`, {
     stdio: 'pipe', timeout: 120000,
