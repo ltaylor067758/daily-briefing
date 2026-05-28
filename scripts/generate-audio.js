@@ -8,20 +8,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(__dirname, '..', 'src', 'content', 'briefings');
 const AUDIO_DIR = join(__dirname, '..', 'public', 'audio');
 
-// 用 SSML 包裹文本，控制语速和音高，让声音不再机械
-function buildSSML(text, voice) {
-  const escaped = text
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;').replace(/'/g, '&apos;');
-  const rate = TTS_CONFIG.rate;
-  const pitch = voice === TTS_CONFIG.maleVoice ? '-3Hz' : '+3Hz';
-  return `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="zh-CN">
-<voice name="${voice}">
-<prosody rate="${rate}" pitch="${pitch}">${escaped}</prosody>
-</voice>
-</speak>`;
-}
-
 function getTodayDate() {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -350,7 +336,7 @@ async function main() {
   // ===== 自检：确保 edge-tts 工作正常 =====
   console.log('自检 edge-tts...');
   try {
-    execSync(`edge-tts --voice ${TTS_CONFIG.femaleVoice} --text "测试" --write-media /tmp/tts_test.mp3 --rate "-5%"`, { stdio: 'pipe', timeout: 15000 });
+    execSync(`edge-tts --voice ${TTS_CONFIG.femaleVoice} --text "测试" --write-media /tmp/tts_test.mp3 --rate=-5%`, { stdio: 'pipe', timeout: 15000 });
     console.log('  ✓ edge-tts 工作正常');
   } catch (err) {
     console.error('  ✗ edge-tts 自检失败:', err.message);
@@ -380,7 +366,7 @@ async function main() {
 
     try {
       execSync(
-        `edge-tts --voice ${line.voice} --rate "${TTS_CONFIG.rate}" --pitch "${pitch}" --text "${safeText}" --write-media "${segFile}"`,
+        `edge-tts --voice ${line.voice} --rate=${TTS_CONFIG.rate} --pitch=${pitch} --text "${safeText}" --write-media "${segFile}"`,
         { stdio: 'pipe', timeout: 30000 }
       );
       segmentFiles.push(segFile);
