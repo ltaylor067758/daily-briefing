@@ -31,7 +31,6 @@ function parseBriefing(mdContent) {
   let currentSection = null;
   let currentItems = [];
   let quote = '';
-  let pendingDiscussion = '';
 
   const lines = mdContent.split('\n');
   for (let i = 0; i < lines.length; i++) {
@@ -41,19 +40,21 @@ function parseBriefing(mdContent) {
       currentSection = line.replace('## ', '').trim();
       currentItems = [];
     }
-    // Check for discussion comment on its own line
-    const dMatch = line.match(/<!--\s*discuss:\s*(.+?)\s*-->/);
-    if (dMatch) {
-      pendingDiscussion = dMatch[1].trim();
-      continue;
-    }
     const itemMatch = line.match(/^\d+\.\s*\*\*\[?(.+?)\]?\*\*\s*[—\-]\s*(.+)/);
     if (itemMatch) {
       let summary = itemMatch[2].trim();
       summary = summary.replace(/\.{2,}\[阅读原文\]\([^)]+\)/, '').replace(/\[阅读原文\]\([^)]+\)/g, '').replace(/\*+/g, '').trim();
       const title = itemMatch[1].trim();
-      currentItems.push({ title, summary, discussion: pendingDiscussion });
-      pendingDiscussion = '';
+      // Peek at next line for discussion comment
+      let discussion = '';
+      if (i + 1 < lines.length) {
+        const dMatch = lines[i + 1].match(/<!--\s*discuss:\s*(.+?)\s*-->/);
+        if (dMatch) {
+          discussion = dMatch[1].trim();
+          i++; // consume the discussion line
+        }
+      }
+      currentItems.push({ title, summary, discussion });
     }
     if (line.match(/^>\s*\*\*今日金句/)) {
       const qMatch = line.match(/>\s*\*\*今日金句\*\*[：:]\s*(.+)/);
