@@ -1,12 +1,19 @@
+import Anthropic from '@anthropic-ai/sdk';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
-import { TTS_CONFIG } from './lib/config.js';
+import { TTS_CONFIG, DIALOGUE_SYSTEM_PROMPT } from './lib/config.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(__dirname, '..', 'src', 'content', 'briefings');
 const AUDIO_DIR = join(__dirname, '..', 'public', 'audio');
+
+const client = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN || '',
+  baseURL: process.env.ANTHROPIC_BASE_URL || 'https://api.deepseek.com/anthropic',
+});
+const MODEL = process.env.ANTHROPIC_MODEL || 'deepseek-v4-pro';
 
 function getTodayDate() {
   const d = new Date();
@@ -14,96 +21,107 @@ function getTodayDate() {
 }
 
 function checkDeps() {
-  let hasEdgeTts = false;
-  let hasFfmpeg = false;
-
+  let hasEdgeTts = false, hasFfmpeg = false;
   try {
     execSync('edge-tts --version 2>/dev/null || python -m edge_tts --version 2>/dev/null', { stdio: 'pipe' });
     hasEdgeTts = true;
-  } catch { /* no edge-tts */ }
-
+  } catch {}
   try {
     execSync('ffmpeg -version', { stdio: 'pipe' });
     hasFfmpeg = true;
-  } catch { /* no ffmpeg */ }
-
+  } catch {}
   return { hasEdgeTts, hasFfmpeg };
 }
 
-function buildDialogue(mdContent, dateChinese) {
-  const lines = mdContent.split('\n');
-  let script = []; // [{speaker:'男'|'女', voice: string, text: string}]
+async function generateDialogueWithAI(briefingContent, dateChinese) {
+  console.log('调用 AI 生成播客对话...');
 
-  function add(speaker, voice, text) {
-    script.push({ speaker, voice, text });
-  }
+  const userPrompt = `以下是今天的新闻简报。请根据系统指令，生成一段自然生动的男女对话播客脚本。
 
-  const M = '男';
-  const F = '女';
-  const maleVoice = TTS_CONFIG.maleVoice;
-  const femaleVoice = TTS_CONFIG.femaleVoice;
+${briefingContent}
 
-  // 开场
-  add(M, maleVoice, `各位好，今天是${dateChinese}，欢迎收听每日简报语音播客。`);
-  add(F, femaleVoice, `我是小晓。`);
-  add(M, maleVoice, `我是云希。今天的简报涵盖了国内要闻、国际动态和AI科技圈的最新消息，让我们一起看看今天发生了什么。`);
+今天是${dateChinese}。`;
 
-  let turn = 0; // 0=女, 1=男
-  let sectionIndex = 0;
+  const response = await client.messages.create({
+    model: MODEL,
+    max_tokens: 4096,
+    system: DIALOGUE_SYSTEM_PROMPT,
+    messages: [{ role: 'user', content: userPrompt }],
+    temperature: 0.8,
+  });
+
+  const content = response.content
+    .filter(block => block.type === 'text')
+    .map(block => block.text)
+    .join('');
+
+  console.log(`AI 对话长度: ${content.length} 字符`);
+  return content;
+}
+
+function parseDialogue(aiOutput) {
+  // AI输出格式: "男：xxx" 或 "女：xxx"，每行一个发言
+  const lines = aiOutput.split('\n');
+  const script = [];
 
   for (const line of lines) {
-    // 版块标题
-    if (line.startsWith('## ')) {
-      const sectionTitle = line.replace('## ', '').trim();
-      add(F, femaleVoice, `接下来是${sectionTitle}。`);
-      turn = 0;
-      sectionIndex++;
-      continue;
-    }
+    const trimmed = line.trim();
+    if (!trimmed) continue;
 
-    // 新闻条目
-    const itemMatch = line.match(/^\d+\.\s*\*\*\[?(.+?)\]?\*\*\s*[—\-]\s*(.+)/);
-    if (itemMatch) {
-      const title = itemMatch[1].trim();
-      let summary = itemMatch[2].trim();
-      summary = summary.replace(/\.{2,}\[阅读原文\]\([^)]+\)/, '。').replace(/\[阅读原文\]\([^)]+\)/g, '');
-
-      const speaker = turn % 2 === 0 ? F : M;
-      const voice = turn % 2 === 0 ? femaleVoice : maleVoice;
-      add(speaker, voice, `${title}。${summary}`);
-
-      // 男女交替互动
-      if (turn % 2 === 1 && turn > 0) {
-        // 男方说完后，女方简短回应
-        // 不每句都回应，隔一句回应
+    const match = trimmed.match(/^(男|女)[：:]\s*(.+)/);
+    if (match) {
+      const speaker = match[1];
+      const text = match[2].trim();
+      if (text.length > 0) {
+        script.push({
+          speaker,
+          voice: speaker === '男' ? TTS_CONFIG.maleVoice : TTS_CONFIG.femaleVoice,
+          text,
+        });
       }
-      turn++;
-      continue;
-    }
-
-    // 金句
-    if (line.match(/^>\s*\*\*今日金句/)) {
-      const qMatch = line.match(/>\s*\*\*今日金句\*\*[：:]\s*(.+)/);
-      if (qMatch) {
-        add(F, femaleVoice, '最后是今天的金句。');
-        add(M, maleVoice, qMatch[1].trim());
-      }
-      continue;
     }
   }
-
-  // 结束语
-  add(M, maleVoice, '以上就是今天的全部内容。');
-  add(F, femaleVoice, '每天进步一点点，我们明天见。');
-  add(M, maleVoice, '感谢收听，再会。');
 
   return script;
 }
 
-function formatDialogueText(script) {
-  return script.map(line =>
-    `【${line.speaker}】${line.text}`
-  ).join('\n\n');
+function fallbackDialogue(mdContent, dateChinese) {
+  // Fallback when AI is unavailable: simple alternating reading
+  console.log('使用降级播客模式');
+  const lines = mdContent.split('\n');
+  let script = [];
+  let turn = 0;
+
+  script.push({ speaker: '男', voice: TTS_CONFIG.maleVoice, text: `各位好，今天是${dateChinese}，欢迎收听每日简报。` });
+
+  for (const line of lines) {
+    if (line.startsWith('## ')) {
+      const section = line.replace('## ', '').trim();
+      script.push({ speaker: '女', voice: TTS_CONFIG.femaleVoice, text: `下面是${section}。` });
+      turn = 0;
+      continue;
+    }
+    const itemMatch = line.match(/^\d+\.\s*\*\*\[?(.+?)\]?\*\*\s*[—\-]\s*(.+)/);
+    if (itemMatch) {
+      const title = itemMatch[1].trim();
+      let summary = itemMatch[2].replace(/\.{2,}\[阅读原文\]\([^)]+\)/, '。').replace(/\[阅读原文\]\([^)]+\)/g, '').trim();
+      const voice = turn % 2 === 0 ? TTS_CONFIG.femaleVoice : TTS_CONFIG.maleVoice;
+      const speaker = turn % 2 === 0 ? '女' : '男';
+      script.push({ speaker, voice, text: `${title}。${summary}` });
+      turn++;
+      continue;
+    }
+    if (line.match(/^>\s*\*\*今日金句/)) {
+      const qMatch = line.match(/>\s*\*\*今日金句\*\*[：:]\s*(.+)/);
+      if (qMatch) {
+        script.push({ speaker: '女', voice: TTS_CONFIG.femaleVoice, text: '今天的金句：' });
+        script.push({ speaker: '男', voice: TTS_CONFIG.maleVoice, text: qMatch[1].trim() });
+      }
+    }
+  }
+
+  script.push({ speaker: '男', voice: TTS_CONFIG.maleVoice, text: '以上就是今天的全部内容，感谢收听，我们明天见。' });
+  return script;
 }
 
 async function main() {
@@ -124,15 +142,27 @@ async function main() {
   const d = new Date();
   const dateChinese = `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
 
-  const script = buildDialogue(mdContent, dateChinese);
+  // Step 1: Generate dialogue (AI or fallback)
+  let script;
+  try {
+    const aiDialogue = await generateDialogueWithAI(mdContent, dateChinese);
+    script = parseDialogue(aiDialogue);
+    if (script.length < 5) {
+      console.log('AI 对话内容不足，使用降级模式');
+      script = fallbackDialogue(mdContent, dateChinese);
+    }
+  } catch (err) {
+    console.error('AI 对话生成失败:', err.message);
+    script = fallbackDialogue(mdContent, dateChinese);
+  }
+
   console.log(`对话脚本: ${script.length} 句`);
 
-  // 保存对话稿
+  // Save dialogue text
   const scriptsDir = join(__dirname, '..', 'public', 'scripts');
-  if (!existsSync(scriptsDir)) {
-    mkdirSync(scriptsDir, { recursive: true });
-  }
-  writeFileSync(join(scriptsDir, `${dateStr}-dialogue.txt`), formatDialogueText(script), 'utf-8');
+  if (!existsSync(scriptsDir)) mkdirSync(scriptsDir, { recursive: true });
+  const scriptText = script.map(l => `【${l.speaker}】${l.text}`).join('\n\n');
+  writeFileSync(join(scriptsDir, `${dateStr}-dialogue.txt`), scriptText, 'utf-8');
   console.log('✓ 对话稿已保存');
 
   if (!deps.hasEdgeTts) {
@@ -140,11 +170,8 @@ async function main() {
     return;
   }
 
-  if (!existsSync(AUDIO_DIR)) {
-    mkdirSync(AUDIO_DIR, { recursive: true });
-  }
-
-  // 纯文本逐句生成音频（不用SSML），再用ffmpeg拼接
+  // Step 2: Generate audio segments
+  if (!existsSync(AUDIO_DIR)) mkdirSync(AUDIO_DIR, { recursive: true });
   const tmpDir = join(AUDIO_DIR, 'tmp_' + dateStr);
   mkdirSync(tmpDir, { recursive: true });
 
@@ -154,8 +181,7 @@ async function main() {
   for (let i = 0; i < script.length; i++) {
     const line = script[i];
     const segFile = join(tmpDir, `${String(i + 1).padStart(3, '0')}.mp3`);
-    // 把文本中的特殊字符转义
-    const safeText = line.text.replace(/"/g, '\\"').replace(/`/g, '\\`').replace(/\$/g, '\\$');
+    const safeText = line.text.replace(/"/g, '\\"');
 
     try {
       execSync(
@@ -171,32 +197,25 @@ async function main() {
 
   if (segmentFiles.length === 0) {
     console.error('没有成功生成任何片段');
-    process.exit(1);
+    return;
   }
 
-  // ffmpeg 拼接
+  // Step 3: Concatenate with ffmpeg
   const concatFile = join(tmpDir, 'concat.txt');
-  const concatContent = segmentFiles
-    .map(f => `file '${f.replace(/\\/g, '/')}'`)
-    .join('\n');
-  writeFileSync(concatFile, concatContent, 'utf-8');
+  writeFileSync(concatFile, segmentFiles.map(f => `file '${f.replace(/\\/g, '/')}'`).join('\n'), 'utf-8');
 
   const outputFile = join(AUDIO_DIR, `${dateStr}.mp3`);
   console.log('拼接音频...');
   execSync(`ffmpeg -f concat -safe 0 -i "${concatFile}" -c copy "${outputFile}" -y`, {
-    stdio: 'pipe',
-    timeout: 120000,
+    stdio: 'pipe', timeout: 120000,
   });
 
-  // 清理临时文件
   execSync(`rm -rf "${tmpDir}"`, { stdio: 'pipe' });
-
   console.log(`✓ 已生成 ${outputFile}`);
   console.log('=== 音频处理完成 ===');
 }
 
 main().catch(err => {
-  console.error('音频生成出错:', err);
-  // 不 exit 1，允许站点继续构建
+  console.error('音频生成出错:', err.message);
   console.log('站点仍可正常构建（无音频）');
 });
