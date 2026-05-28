@@ -13,13 +13,13 @@
   --font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
   --radius: 3px;
-  --max-width: 760px;
+  --max-width: 1040px;
 }
 
 /* ===== Reset ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { font-size: 14px; -webkit-font-smoothing: antialiased; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
 
 body {
   background: var(--bg);
@@ -30,9 +30,9 @@ body {
 }
 
 /* ===== Typography ===== */
-h1 { font-family: var(--font-mono); font-size: 0.95rem; font-weight: 600; color: var(--text-bright); margin-bottom: 0.25rem; letter-spacing: -0.3px; }
-h2 { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin: 0; }
-h3 { font-size: 0.85rem; font-weight: 600; color: var(--text-bright); }
+h1 { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 600; color: var(--text-bright); margin-bottom: 0.25rem; letter-spacing: -0.3px; }
+h2 { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin: 0; }
+h3 { font-size: 0.95rem; font-weight: 600; color: var(--text-bright); }
 
 a { color: var(--accent); text-decoration: none; transition: color 0.1s; }
 a:hover { color: var(--accent-glow); }
@@ -151,7 +151,7 @@ a:hover { color: var(--accent-glow); }
 }
 
 .news-card h3 {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 600;
   flex: 0 0 auto;
   margin: 0;
@@ -161,9 +161,9 @@ a:hover { color: var(--accent-glow); }
 
 .news-card .summary {
   color: var(--text-dim);
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   flex: 1 1 100%;
-  line-height: 1.45;
+  line-height: 1.55;
 }
 
 .news-card .meta {
