@@ -1,7 +1,0 @@
-<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="zh-CN">
-<voice name="zh-CN-YunxiNeural">
-<mstts:express-as style="chat" styledegree="1.3">
-<prosody rate="-5%" pitch="+0Hz">先说一个重磅的。中国廉价电力成与美国AI竞赛的关键优势。分析指出，中国充足的廉价电力为大规模运行AI模型所需的数据中心提供了基础</prosody>
-</mstts:express-as>
-</voice>
-</speak>

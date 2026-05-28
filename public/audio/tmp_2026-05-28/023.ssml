@@ -1,5 +1,0 @@
-<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="zh-CN">
-<voice name="zh-CN-YunxiNeural">
-<prosody rate="-5%" pitch="-3Hz">7B参数医学AI智能体战胜GPT-5、o3。说白了就是小型模型通过学会“看哪里、怎么看”，在医学影像诊断任务上超越千亿级大模型</prosody>
-</voice>
-</speak>
