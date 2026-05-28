@@ -1,7 +1,0 @@
-<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="zh-CN">
-<voice name="zh-CN-YunxiNeural">
-<mstts:express-as style="newscast-casual" styledegree="1">
-<prosody rate="-5%" pitch="+0Hz">先看国际。美国4月核心PCE环比增长0.2%。核心个人消费支出价格指数低于预期0.3%，显示通胀压力有所趋缓</prosody>
-</mstts:express-as>
-</voice>
-</speak>

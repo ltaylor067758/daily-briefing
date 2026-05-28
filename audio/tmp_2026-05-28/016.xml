@@ -1,7 +1,0 @@
-<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="zh-CN">
-<voice name="zh-CN-XiaoxiaoNeural">
-<mstts:express-as style="newscast-casual" styledegree="1">
-<prosody rate="-5%" pitch="+0Hz">那其他国际新闻呢？</prosody>
-</mstts:express-as>
-</voice>
-</speak>

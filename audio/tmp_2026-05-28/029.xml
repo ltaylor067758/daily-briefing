@@ -1,7 +1,0 @@
-<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="zh-CN">
-<voice name="zh-CN-YunxiNeural">
-<mstts:express-as style="friendly" styledegree="1.5">
-<prosody rate="-5%" pitch="+0Hz">今天的简报到此结束。</prosody>
-</mstts:express-as>
-</voice>
-</speak>

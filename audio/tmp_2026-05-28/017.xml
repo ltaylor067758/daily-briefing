@@ -1,7 +1,0 @@
-<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="zh-CN">
-<voice name="zh-CN-YunxiNeural">
-<mstts:express-as style="newscast-casual" styledegree="1">
-<prosody rate="-5%" pitch="+0Hz">还有一条国际新闻。日本数百种面粉类产品将于8月涨价。受中东局势影响，部分面粉制品最高涨幅达24%，将冲击民众日常消费</prosody>
-</mstts:express-as>
-</voice>
-</speak>
