@@ -146,6 +146,9 @@ function buildConversation(briefing, dateChinese) {
           `另外还有：${item.title}。${item.summary}`,
           `再来看一条。${item.title}。${item.summary}`,
           `此外值得注意的还有。${item.title}，${item.summary}`,
+          `还有一个事儿。${item.title}。${item.summary}`,
+          `接着往下看。${item.title}。${item.summary}`,
+          `再补充一个重要的。${item.title}。${item.summary}`,
         ];
         add(M, mVoice, pick(intros));
       }
