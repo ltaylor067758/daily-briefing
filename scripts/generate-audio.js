@@ -82,7 +82,20 @@ function buildConversation(briefing, dateChinese) {
   const mVoice = TTS_CONFIG.maleVoice;
   const fVoice = TTS_CONFIG.femaleVoice;
   let s = [];
-  function add(speaker, voice, text) { s.push({ speaker, voice, text }); }
+  let lastSpeaker = null;
+  function add(speaker, voice, text) { s.push({ speaker, voice, text }); lastSpeaker = speaker; }
+
+  // 短促回应，模拟聊天中的"嗯"、"对的"
+  const chimed = { count: 0 };
+  function chime(voice) {
+    // 每 8 句左右来一次自然的插话
+    if (chimed.count > 0 && Math.random() > 0.3) return;
+    const pool = ['嗯。', '对的。', '是这个意思。', '确实。', '没错。'];
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    add(lastSpeaker === M ? F : M, voice, pick);
+    chimed.count = 0;
+  }
+  chimed.count = Math.floor(Math.random() * 3);
 
   // ===== 开场 =====
   const pickOpen = createPicker([
@@ -101,181 +114,131 @@ function buildConversation(briefing, dateChinese) {
     '今天有几条新闻挺有聊头的。',
   ]);
   add(F, fVoice, pickChat());
-  add(M, mVoice, '先从国内开始吧。');
+  add(M, mVoice, '嗯，先从国内开始吧。');
+
+  // ===== 通用：聊一条新闻（自然对话流）=====
+  // presenter说新闻 → reactor回应/追问 → presenter分享讨论角度 → 有时reactor追加一句
+  function chatNewsItem(item, presenter, reactor, pVoice, rVoice, isFirst) {
+    if (!isFirst) {
+      // 自然的过渡：不总是完整句子，有时就是一个词
+      const transitions = [
+        '还有一条。', '接着说。',
+        '下一条也挺有意思。', '再来看这个。',
+        '还有一个事儿。',
+      ];
+      const t = transitions[Math.floor(Math.random() * transitions.length)];
+      add(reactor, rVoice, t);
+    }
+
+    // Presenter 说出新闻
+    const leads = [
+      `${item.title}。具体来说呢，${item.summary}`,
+      `${item.title}。我给大家展开一下，${item.summary}`,
+      `${item.title}。这个事儿呢，${item.summary}`,
+      `${item.title}。${item.summary}`,
+    ];
+    add(presenter, pVoice, leads[Math.floor(Math.random() * leads.length)]);
+
+    chimed.count++;
+
+    // Reactor 的反应：多是短句，偶尔追问
+    const shortReacts = ['嗯，然后呢？', '这怎么讲？', '怎么说？', '嗯？', '有意思。'];
+    const longReacts = [
+      '这事儿影响不小，展开说说？',
+      '这个有意思，你是怎么看的？',
+      '我注意到了这个，背后的逻辑是什么？',
+    ];
+    const react = Math.random() < 0.6
+      ? shortReacts[Math.floor(Math.random() * shortReacts.length)]
+      : longReacts[Math.floor(Math.random() * longReacts.length)];
+    add(reactor, rVoice, react);
+
+    // Presenter 分享讨论角度
+    const discussion = item.discussion || '';
+    if (discussion) {
+      add(presenter, pVoice, discussion);
+      chimed.count++;
+      // 偶尔 reactor 简单回应
+      if (Math.random() < 0.35) {
+        const agree = ['嗯，有道理。', '了解了。', '明白。', '确实是这样。'];
+        add(reactor, rVoice, agree[Math.floor(Math.random() * agree.length)]);
+      }
+    }
+
+    // 有时两个人会多聊一句（30%概率）
+    if (Math.random() < 0.3 && discussion) {
+      const extras = [
+        '这么说的话，后续还值得关注。',
+        '对，这个方向我们后续再看看。',
+        '嗯，这个点到为止，接着看下一条。',
+      ];
+      const extra = extras[Math.floor(Math.random() * extras.length)];
+      // 谁接这句话取决于当前节奏
+      add(lastSpeaker === presenter ? reactor : presenter,
+          lastSpeaker === presenter ? rVoice : pVoice, extra);
+    }
+  }
 
   // ===== 国内要闻 =====
   const domestic = sections.find(sec => sec.title.includes('国内'));
   if (domestic && domestic.items.length > 0) {
-    const pickDomOpen = createPicker([
-      '那先看看国内方面吧。', '咱们先从国内新闻开始。', '先聊聊国内的。',
-      '先看国内。', '好，从国内新闻说起。',
-    ]);
-    add(F, fVoice, pickDomOpen());
-
+    const domOpen = '先看看国内方面吧。';
+    add(F, fVoice, domOpen);
     const top = domestic.items.slice(0, 3);
-    const pickLead = createPicker([
-      `今天国内最值得关注的一个事儿：{title}。具体来说呢，{summary}`,
-      `国内方面有个事儿挺值得聊的。{title}。{summary}`,
-      `先说说国内。{title}。我给大家展开一下，{summary}`,
-      `国内今天最重磅的：{title}。{summary}`,
-      `来看看国内。{title}。这个事儿呢，{summary}`,
-    ]);
-    const pickReact = createPicker([
-      '这事儿影响不小，你怎么看？',
-      '嗯，这条挺值得关注的。',
-      '有意思，展开说说？',
-      '这个我知道一点，背后应该还有更多可以聊的吧？',
-      '确实，这条信息量不小。',
-    ]);
-    const pickAnalyze = createPicker([
-      '这么说吧，这个趋势如果持续下去，影响面比表面看起来大多了。',
-      '有意思，这让我想到最近好几个类似的事。',
-      '其实关键不在于这件事本身，而是它透出来的信号。',
-      '我倒觉得，这背后是一个更大的变化在发生。',
-      '换个角度看，这其实不算坏事。',
-      '仔细想想，这个连锁反应可能才刚开始。',
-    ]);
-    const pickNext = createPicker([
-      '还有一条也挺重要的。', '另外值得一提的还有。',
-      '再来看这条。', '下一条也挺有意思的。',
-      '接着说。', '咱们接着看。',
-    ]);
-
     for (let i = 0; i < top.length; i++) {
-      const item = top[i];
-      if (i === 0) {
-        add(M, mVoice, pickLead().replace('{title}', item.title).replace('{summary}', item.summary));
-        add(F, fVoice, pickReact());
-        add(M, mVoice, item.discussion || pickAnalyze());
-      } else {
-        add(F, fVoice, pickNext());
-        const intro = `${item.title}。${item.summary}`;
-        const extra = item.discussion ? ` ${item.discussion}` : '';
-        add(M, mVoice, intro + extra);
-      }
+      // 轮流主导：第一条男主导，第二条女主导，第三条男主导...
+      const presenter = i % 2 === 0 ? M : F;
+      const reactor = presenter === M ? F : M;
+      const pVoice = presenter === M ? mVoice : fVoice;
+      const rVoice = reactor === M ? mVoice : fVoice;
+      chatNewsItem(top[i], presenter, reactor, pVoice, rVoice, i === 0);
     }
-
+    // 其余简述
     const rest = domestic.items.slice(3);
     if (rest.length > 0) {
-      const pickRest = createPicker([
-        `国内方面还有${rest.length === 1 ? '一条' : '几条'}值得了解的。`,
-        `国内${rest.length === 1 ? '还有一条' : `另外还有${rest.length}条`}，快速过一下。`,
-        `国内${rest.length === 1 ? '还剩一条' : `还剩${rest.length}条`}，简单提一下。`,
-      ]);
-      add(F, fVoice, pickRest());
-      const titles = rest.map(r => r.title).join('；');
-      add(M, mVoice, `简单说一下：${titles}。感兴趣的可以看文字版简报。`);
+      const n = rest.length;
+      const restIntro = n === 1 ? '国内还有一条，快速提一下。' : `国内还有${n}条，快速过一下。`;
+      add(F, fVoice, restIntro);
+      add(M, mVoice, rest.map(r => r.title).join('；') + '。感兴趣的可以看文字版。');
     }
   }
 
   // ===== 国际要闻 =====
   const intl = sections.find(sec => sec.title.includes('国际'));
   if (intl && intl.items.length > 0) {
-    const pickIntlOpen = createPicker([
-      '好，咱们把目光转向国际。', '来，看看国际方面。', '把视线转向国外。',
-      '好，来关注一下国际上的大事。', '再来聊聊国际新闻。',
-    ]);
-    add(F, fVoice, pickIntlOpen());
+    const intlOpens = ['来，把目光转向国际。', '好，看看国际上的大事。', '来看国际方面。'];
+    add(F, fVoice, intlOpens[Math.floor(Math.random() * intlOpens.length)]);
     const top = intl.items.slice(0, 3);
-
-    const pickIntlLead = createPicker([
-      `今天国际上最大的焦点：{title}。{summary}`,
-      `国际方面今天最受关注的是：{title}。具体来说，{summary}`,
-      `先看国际上最大的一条新闻。{title}。{summary}`,
-      `国际上今天最值得关注的：{title}。{summary}`,
-      `先看国际。{title}。{summary}`,
-    ]);
-    const pickAskMore = createPicker([
-      '那其他国际新闻呢？', '还有别的吗？', '国际上还有什么动向？',
-      '还有哪些值得关注的？', '其他国家有什么动静？',
-    ]);
-    const pickIntlNext = createPicker([
-      `另外还有：{title}。{summary}`,
-      `再来看一条。{title}。{summary}`,
-      `此外值得注意的还有。{title}，{summary}`,
-      `还有一个事儿。{title}。{summary}`,
-      `接着往下看。{title}。{summary}`,
-      `再补充一个重要的。{title}。{summary}`,
-      `还有一条国际新闻。{title}。{summary}`,
-      `下一条。{title}。{summary}`,
-    ]);
-    const pickIntlReact = createPicker([
-      '嗯，这国际局势是越来越复杂了。',
-      '了解了，继续。',
-      '这影响面挺广的。',
-      '嗯，这条后续值得盯着看。',
-      '确实，最近国际上不太平。',
-    ]);
-
     for (let i = 0; i < top.length; i++) {
-      const item = top[i];
-      if (i === 0) {
-        add(M, mVoice, pickIntlLead().replace('{title}', item.title).replace('{summary}', item.summary));
-        if (item.discussion) { add(F, fVoice, item.discussion); }
-        if (top.length > 1) { add(F, fVoice, pickAskMore()); }
-      } else {
-        const intro = pickIntlNext().replace('{title}', item.title).replace('{summary}', item.summary);
-        add(M, mVoice, intro + (item.discussion ? ` ${item.discussion}` : ''));
-      }
-      if (i > 0 && i < top.length - 1) { add(F, fVoice, pickIntlReact()); }
+      const presenter = i % 2 === 0 ? M : F;
+      const reactor = presenter === M ? F : M;
+      const pVoice = presenter === M ? mVoice : fVoice;
+      const rVoice = reactor === M ? mVoice : fVoice;
+      chatNewsItem(top[i], presenter, reactor, pVoice, rVoice, i === 0);
     }
     if (intl.items.length <= 1) {
-      add(F, fVoice, '今天的国际新闻不算多，全球局势算是相对平静的一天。');
+      add(F, fVoice, '今天国际新闻不算多，全球局势还算平静。');
     }
   }
 
   // ===== AI 与科技 =====
   const ai = sections.find(sec => sec.title.includes('AI') || sec.title.includes('科技'));
   if (ai && ai.items.length > 0) {
-    const pickAiOpen = createPicker([
-      '最后咱们聊聊科技圈。今天AI领域又有不少新鲜事。',
-      '最后来看看科技方面。AI圈每天都有新花样。',
-      '来，最后说说科技和AI。最近这个领域变化太快了。',
-      '最后来聊聊科技。每天都有让人眼前一亮的新进展。',
-      '科技板块压轴。今天也有不少有意思的消息。',
-    ]);
-    add(F, fVoice, pickAiOpen());
+    const aiOpens = [
+      '最后聊聊科技。AI圈每天都有新花样。',
+      '最后来看看科技和AI，最近变化太快了。',
+      '科技板块压轴，今天也有不少有意思的。',
+      '来，最后说说科技。每天都有让人眼前一亮的新进展。',
+    ];
+    add(F, fVoice, aiOpens[Math.floor(Math.random() * aiOpens.length)]);
     const top = ai.items.slice(0, 3);
-
-    const pickAiLead = createPicker([
-      `最让我兴奋的是这个：{title}。{summary}`,
-      `今天科技圈最亮眼的：{title}。{summary}`,
-      `先来一个我觉得特别有意思的。{title}。展开说说，{summary}`,
-      `今天AI圈有个让我特别激动的消息。{title}。{summary}`,
-      `先说一个重磅的。{title}。{summary}`,
-    ]);
-    const pickAiWow = createPicker([
-      '哇，这个确实很有意思。技术发展比我们想象的快多了。',
-      '这个厉害了。AI真的在改变每个行业。',
-      '有意思。这可能会改变很多东西。',
-      '这个方向确实值得关注。',
-      '不得了，这个突破挺关键的。',
-    ]);
-    const pickAiNext = createPicker([
-      '还有这条也挺重磅的。', '再来看一个。', '下一条也很值得聊。',
-      '还有一条AI方面的。', '再聊一个。', '还有一个值得关注的。',
-    ]);
-    const pickAiLast = createPicker([
-      '最后再提一个。', '还有一个我挺感兴趣的。', '再补充一条。',
-      '最后一条了。', '收个尾，再说一个。', '最后再分享一个。',
-    ]);
-
     for (let i = 0; i < top.length; i++) {
-      const item = top[i];
-      if (i === 0) {
-        add(M, mVoice, pickAiLead().replace('{title}', item.title).replace('{summary}', item.summary));
-        if (item.discussion) {
-          add(F, fVoice, item.discussion);
-        } else if (top.length === 1) {
-          add(F, fVoice, pickAiWow());
-        }
-      } else if (i === 1) {
-        add(F, fVoice, pickAiNext());
-        add(M, mVoice, `${item.title}。说白了就是${item.summary}${item.discussion ? ' ' + item.discussion : ''}`);
-      } else {
-        add(F, fVoice, pickAiLast());
-        add(M, mVoice, `${item.title}。${item.summary}${item.discussion ? ' ' + item.discussion : ''}`);
-      }
+      // AI板块让女声也主导一条，换换节奏
+      const presenter = i === 1 ? F : M;
+      const reactor = presenter === M ? F : M;
+      const pVoice = presenter === M ? mVoice : fVoice;
+      const rVoice = reactor === M ? mVoice : fVoice;
+      chatNewsItem(top[i], presenter, reactor, pVoice, rVoice, i === 0);
     }
   }
 
@@ -289,7 +252,7 @@ function buildConversation(briefing, dateChinese) {
     add(M, mVoice, `今天想跟大家分享的一句话：${quote}`);
     const pickQuoteReact = createPicker([
       '挺有启发的。你们觉得呢？', '这句话值得琢磨一下。',
-      '嗯，挺有道理的。', '说得真好。', '每次的金句都让人想很多。',
+      '嗯，挺有道理的。', '说得真好。',
     ]);
     add(F, fVoice, pickQuoteReact());
   }
