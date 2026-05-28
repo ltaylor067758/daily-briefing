@@ -1,7 +1,7 @@
 <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="zh-CN">
-<voice name="zh-CN-YunyangNeural">
+<voice name="zh-CN-YunxiNeural">
 <mstts:express-as style="newscast-casual" styledegree="1">
-<prosody rate="-5%" pitch="+0Hz">此外值得注意的还有。以色列袭击加沙城致至少10死，以军对加沙城发动猛烈空袭，遇难者中包含4名儿童，逾20人受伤</prosody>
+<prosody rate="-5%" pitch="+0Hz">下一条。美伊在霍尔木兹海峡附近互相发动袭击。伊朗革命卫队声称攻击美军基地，美国则对阿巴斯港附近发动新打击。</prosody>
 </mstts:express-as>
 </voice>
 </speak>
