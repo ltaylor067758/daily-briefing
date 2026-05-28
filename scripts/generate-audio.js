@@ -176,12 +176,14 @@ function buildConversation(briefing, dateChinese) {
           `先来一个我觉得特别有意思的。${item.title}。展开说说，${item.summary}`,
         ];
         add(M, mVoice, pick(leads));
-        add(F, fVoice, pick([
-          '哇，这个确实很有意思。技术发展比我们想象的快多了。',
-          '这个厉害了。AI真的在改变每个行业。',
-          '有意思。这可能会改变很多东西。',
-          '这个方向确实值得关注。',
-        ]));
+        if (top.length === 1) {
+          add(F, fVoice, pick([
+            '哇，这个确实很有意思。技术发展比我们想象的快多了。',
+            '这个厉害了。AI真的在改变每个行业。',
+            '有意思。这可能会改变很多东西。',
+            '这个方向确实值得关注。',
+          ]));
+        }
       } else if (i === 1) {
         add(F, fVoice, pick(['还有这条也挺重磅的。', '再来看一个。', '下一条也很值得聊。']));
         add(M, mVoice, `${item.title}。说白了就是${item.summary}`);
