@@ -97,7 +97,7 @@ function buildConversation(briefing, dateChinese) {
     '对，咱们聊新闻，不是念新闻。',
     '没错，深度的聊比泛泛的念更有意思。',
   ]);
-  add(F, fVoice, pickStyle());
+  add(M, mVoice, pickStyle());
 
   // ===== 国内要闻 =====
   const domestic = sections.find(sec => sec.title.includes('国内'));
