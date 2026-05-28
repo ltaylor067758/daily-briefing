@@ -1,7 +1,7 @@
 <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="zh-CN">
 <voice name="zh-CN-YunxiNeural">
 <mstts:express-as style="newscast-casual" styledegree="1">
-<prosody rate="-5%" pitch="+0Hz">今天国际上最大的焦点：以色列袭击加沙城致至少10人死亡。包括4名儿童在内的平民遇难，事件发生在哈马斯武装派别领导人葬礼后数小时。</prosody>
+<prosody rate="-5%" pitch="+0Hz">先看国际。美国4月核心PCE环比增长0.2%。核心个人消费支出价格指数低于预期0.3%，显示通胀压力有所趋缓</prosody>
 </mstts:express-as>
 </voice>
 </speak>

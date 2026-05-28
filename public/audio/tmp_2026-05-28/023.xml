@@ -1,7 +1,7 @@
 <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="zh-CN">
 <voice name="zh-CN-YunxiNeural">
 <mstts:express-as style="chat" styledegree="1.3">
-<prosody rate="-5%" pitch="+0Hz">7B参数医学AI智能体性能超越o3和GPT-5。说白了就是该模型通过“看哪里、怎么看”的注意力机制实现突破。</prosody>
+<prosody rate="-5%" pitch="+0Hz">5篇AI生成的数学论文被学术会议接收。说白了就是00后创始人洪乐潼开发的系统实现形式化证明，公司完成14亿元融资</prosody>
 </mstts:express-as>
 </voice>
 </speak>
