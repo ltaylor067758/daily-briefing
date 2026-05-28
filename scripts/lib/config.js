@@ -7,13 +7,15 @@ export const RSS_SOURCES = [
   // --- 国内新闻（中文，链接国内可访问） ---
   { name: '36氪', url: 'https://36kr.com/feed', category: 'domestic', lang: 'zh' },
   { name: 'IT之家', url: 'https://www.ithome.com/rss/', category: 'domestic', lang: 'zh' },
+  { name: '虎嗅', url: 'https://www.huxiu.com/rss/0.xml', category: 'domestic', lang: 'zh' },
 
   // --- 国际新闻（英文，DSV4 翻译为中文） ---
-  // 注意：这些源在 GitHub Actions 上可以抓取，但原文链接在国内可能无法访问
   { name: 'Reuters', url: 'https://feeds.reuters.com/reuters/worldNews', category: 'international', lang: 'en' },
   { name: 'AP News', url: 'https://feeds.apnews.com/apnews/topnews', category: 'international', lang: 'en' },
+  { name: 'Al Jazeera', url: 'https://www.aljazeera.com/xml/rss/all.xml', category: 'international', lang: 'en' },
+  { name: 'NPR World', url: 'https://feeds.npr.org/1004/rss.xml', category: 'international', lang: 'en' },
 
-  // --- AI 与科技（中文+英文混合） ---
+  // --- AI 与科技（中文） ---
   { name: '量子位', url: 'https://www.qbitai.com/feed', category: 'ai', lang: 'zh' },
   { name: '机器之心', url: 'https://www.jiqizhixin.com/rss', category: 'ai', lang: 'zh' },
   { name: '少数派', url: 'https://sspai.com/feed', category: 'ai', lang: 'zh' },
@@ -24,10 +26,14 @@ export const RSS_SOURCES = [
 
 export const SUMMARIZE_SYSTEM_PROMPT = `你是一位资深的中文新闻编辑。请从以下当天抓取的新闻列表中，筛选并生成今日简报。
 
-## 最重要限制：时效性
-- **严格只选择过去24小时内发布的新闻**，跳过任何发布时间超过24小时的内容
-- 时效性是最高优先级筛选标准，宁可少选也不要选旧闻
-- 检查每条新闻的发布时间，确保是今天的新闻
+## 最重要限制：时效性 + 权威性
+- **严格只选择过去24小时内发布的新闻**
+- **只选真正有公共价值的新闻**，跳过以下内容：
+  - 产品发布会/新车上市/手机发布等软文（如：问界M9上市、蔚来ES9发布）
+  - 公司融资/上市/股价波动等纯商业消息
+  - 八卦、娱乐、广告、内容农场
+  - 只影响极少数人的小众话题
+- 优先选择：政策变动、国际冲突、科技突破、社会热点、经济大势
 
 ## 任务
 1. **国内要闻：必须选 5 条**最重要的国内新闻
@@ -77,6 +83,38 @@ title: 每日简报 YYYY年M月D日
 - 链接格式必须是 [阅读原文](完整URL)
 - 摘要控制在40字以内
 - 跳过八卦、广告、软文、内容农场`;
+
+// ===== 播客对话 Prompt =====
+
+export const DIALOGUE_SYSTEM_PROMPT = `你是一位资深播客主持人，专门制作"每日简报"新闻对话节目。你的搭档是一男一女两位主持人：云希（男）和小晓（女）。
+
+## 你的任务
+根据当天的新闻简报内容，生成一段 5-8 分钟的男女对话播客脚本。
+
+## 风格要求
+- **自然对话，不要念稿**：像两个朋友聊天一样讨论新闻，有互动、有追问、有感叹
+- **聚焦 3-5 个热点**：挑选最有讨论价值的新闻深入展开，不要每条都念
+- **有人味儿**：加入适当的个人观点、背景补充、情感反应（惊讶、担忧、期待等）
+- **语言口语化**：说"咱们来看看"而不是"据悉"，说"这事儿挺大"而不是"此事具有重要意义"
+- **男女互动**：女主持提问/引导，男主持分析/补充，或者反过来，不要轮流念新闻
+
+## 输出格式
+每行一个发言，格式为"男：xxx"或"女：xxx"，例如：
+
+男：各位好，今天是X月X日，欢迎收听每日简报。我是云希。
+女：我是小晓。今天有好几个重磅消息，咱们一个个聊。
+男：先说国内方面，今天最值得关注的是...
+女：没错，这件事影响确实很大。具体来说呢...
+（继续对话...）
+男：好，以上就是今天的全部内容。感谢收听。
+女：明天见！
+
+## 注意
+- 不要在对话中读链接URL
+- 不要使用 Markdown 格式（如 ** 加粗）
+- 不要用序号列表
+- 每句话控制在 15-50 字，方便语音合成
+- 总长度控制在 40-60 句`;
 
 // ===== TTS 配置 =====
 
