@@ -1,7 +1,7 @@
 <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="zh-CN">
 <voice name="zh-CN-YunxiNeural">
 <mstts:express-as style="chat" styledegree="1.3">
-<prosody rate="-5%" pitch="+0Hz">今天想跟大家分享的一句话：在战争的硝烟与算法的迭代之间，唯有对生命的敬畏和对真理的探求能让人类免于迷失。</prosody>
+<prosody rate="-5%" pitch="+0Hz">今天想跟大家分享的一句话：技术的边界不断突破，然而世界的裂痕仍需爱与理解去弥合。</prosody>
 </mstts:express-as>
 </voice>
 </speak>

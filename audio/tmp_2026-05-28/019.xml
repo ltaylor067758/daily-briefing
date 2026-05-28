@@ -1,7 +1,7 @@
 <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="zh-CN">
 <voice name="zh-CN-YunxiNeural">
 <mstts:express-as style="newscast-casual" styledegree="1">
-<prosody rate="-5%" pitch="+0Hz">另外还有：肯尼亚女子学校宿舍火灾致16名学生死亡。事故发生在吉尔吉尔的乌图米什女子学校，另有79人受伤。</prosody>
+<prosody rate="-5%" pitch="+0Hz">还有一个事儿。以色列密集空袭黎巴嫩南部造成至少16人死亡。袭击不断升级，红十字国际委员会警告当地人道危机进一步恶化</prosody>
 </mstts:express-as>
 </voice>
 </speak>
