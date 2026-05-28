@@ -1,0 +1,7 @@
+<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="zh-CN">
+<voice name="zh-CN-XiaochenNeural">
+<mstts:express-as style="friendly" styledegree="1.5">
+<prosody rate="-5%" pitch="+0Hz">每天早上九点，我们准时更新。想看完整文字版可以访问我们的网站。</prosody>
+</mstts:express-as>
+</voice>
+</speak>
