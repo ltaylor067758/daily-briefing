@@ -366,45 +366,35 @@ async function main() {
     execSync(`rm -f "${outputFile}"`, { stdio: 'pipe' });
   }
 
-  console.log(`生成 ${script.length} 个音频片段（SSML chat 风格）...`);
+  console.log(`生成 ${script.length} 个音频片段...`);
   const segmentFiles = [];
 
-  // 构建批量 JSON
-  const batchItems = script.map((line, i) => {
+  for (let i = 0; i < script.length; i++) {
+    const line = script[i];
     const segFile = join(tmpDir, `${String(i + 1).padStart(3, '0')}.mp3`);
-    segmentFiles.push(segFile);
-    return {
-      id: `${i + 1}/${script.length}`,
-      voice: line.voice,
-      text: line.text,
-      output: segFile,
-      rate: TTS_CONFIG.rate,
-      pitch: line.voice === TTS_CONFIG.maleVoice ? '-3Hz' : '+3Hz',
-    };
-  });
+    const safeText = line.text.replace(/"/g, '\\"').replace(/`/g, '\\`').replace(/\$/g, '\\$');
+    const pitch = line.voice === TTS_CONFIG.maleVoice ? '-3Hz' : '+3Hz';
 
-  const batchFile = join(tmpDir, 'batch.json');
-  writeFileSync(batchFile, JSON.stringify(batchItems, null, 2), 'utf-8');
-
-  try {
-    const ttsScript = join(__dirname, 'tts-batch.py');
-    execSync(`python "${ttsScript}" "${batchFile}"`, { stdio: 'inherit', timeout: 180000 });
-  } catch (err) {
-    console.error('SSML 批量合成出错:', err.message);
+    try {
+      execSync(
+        `edge-tts --voice ${line.voice} --rate=${TTS_CONFIG.rate} --pitch=${pitch} --text "${safeText}" --write-media "${segFile}"`,
+        { stdio: 'pipe', timeout: 30000 }
+      );
+      segmentFiles.push(segFile);
+      console.log(`  [${i + 1}/${script.length}] ✓ ${line.speaker}`);
+    } catch (err) {
+      console.error(`  [${i + 1}/${script.length}] ✗: ${err.message}`);
+    }
   }
 
-  // 验证哪些片段实际成功生成了
-  const okFiles = segmentFiles.filter(f => existsSync(f));
-  console.log(`成功: ${okFiles.length}/${segmentFiles.length} 个片段`);
-
-  if (okFiles.length === 0) {
+  if (segmentFiles.length === 0) {
     console.error('没有成功生成任何片段');
     return;
   }
 
-  // ffmpeg 拼接（只拼接实际存在的文件）
+  // ffmpeg 拼接
   const concatFile = join(tmpDir, 'concat.txt');
-  writeFileSync(concatFile, okFiles.map(f => `file '${f.replace(/\\/g, '/')}'`).join('\n'), 'utf-8');
+  writeFileSync(concatFile, segmentFiles.map(f => `file '${f.replace(/\\/g, '/')}'`).join('\n'), 'utf-8');
 
   console.log('拼接音频...');
   execSync(`ffmpeg -f concat -safe 0 -i "${concatFile}" -c copy "${outputFile}" -y`, {
