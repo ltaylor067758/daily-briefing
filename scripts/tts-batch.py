@@ -30,7 +30,8 @@ async def synthesize_one(item):
 
     # 先试 SSML，失败则退回到纯文本
     try:
-        communicate = Communicate(ssml=ssml, voice=voice)
+        # positional args: Communicate(ssml_string, voice_name)
+        communicate = Communicate(ssml, voice)
         await communicate.save(output)
         print(f"  SSML {label}")
         return
@@ -40,7 +41,7 @@ async def synthesize_one(item):
 
     # 纯文本回退
     try:
-        communicate = Communicate(text=text, voice=voice)
+        communicate = Communicate(text, voice)
         await communicate.save(output)
         print(f"  PLAIN {label}")
     except Exception as e:
