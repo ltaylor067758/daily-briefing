@@ -1,5 +1,5 @@
 <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="zh-CN">
 <voice name="zh-CN-YunxiNeural">
-<prosody rate="-5%" pitch="-3Hz">好，以上就是今天的所有内容。</prosody>
+<prosody rate="-5%" pitch="-3Hz">行，今天的内容就是这些了。</prosody>
 </voice>
 </speak>
