@@ -1,19 +1,12 @@
-import Anthropic from '@anthropic-ai/sdk';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
-import { TTS_CONFIG, DIALOGUE_SYSTEM_PROMPT } from './lib/config.js';
+import { TTS_CONFIG } from './lib/config.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(__dirname, '..', 'src', 'content', 'briefings');
 const AUDIO_DIR = join(__dirname, '..', 'public', 'audio');
-
-const client = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN || '',
-  baseURL: process.env.ANTHROPIC_BASE_URL || 'https://api.deepseek.com/anthropic',
-});
-const MODEL = process.env.ANTHROPIC_MODEL || 'deepseek-v4-pro';
 
 function getTodayDate() {
   const d = new Date();
@@ -33,95 +26,133 @@ function checkDeps() {
   return { hasEdgeTts, hasFfmpeg };
 }
 
-async function generateDialogueWithAI(briefingContent, dateChinese) {
-  console.log('调用 AI 生成播客对话...');
+function parseBriefing(mdContent) {
+  // 解析简报，提取结构化数据
+  const sections = [];
+  let currentSection = null;
+  let currentItems = [];
+  let quote = '';
 
-  const userPrompt = `以下是今天的新闻简报。请根据系统指令，生成一段自然生动的男女对话播客脚本。
-
-${briefingContent}
-
-今天是${dateChinese}。`;
-
-  const response = await client.messages.create({
-    model: MODEL,
-    max_tokens: 4096,
-    system: DIALOGUE_SYSTEM_PROMPT,
-    messages: [{ role: 'user', content: userPrompt }],
-    temperature: 0.8,
-  });
-
-  const content = response.content
-    .filter(block => block.type === 'text')
-    .map(block => block.text)
-    .join('');
-
-  console.log(`AI 对话长度: ${content.length} 字符`);
-  return content;
-}
-
-function parseDialogue(aiOutput) {
-  // AI输出格式: "男：xxx" 或 "女：xxx"，每行一个发言
-  const lines = aiOutput.split('\n');
-  const script = [];
-
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (!trimmed) continue;
-
-    const match = trimmed.match(/^(男|女)[：:]\s*(.+)/);
-    if (match) {
-      const speaker = match[1];
-      const text = match[2].trim();
-      if (text.length > 0) {
-        script.push({
-          speaker,
-          voice: speaker === '男' ? TTS_CONFIG.maleVoice : TTS_CONFIG.femaleVoice,
-          text,
-        });
-      }
-    }
-  }
-
-  return script;
-}
-
-function fallbackDialogue(mdContent, dateChinese) {
-  // Fallback when AI is unavailable: simple alternating reading
-  console.log('使用降级播客模式');
-  const lines = mdContent.split('\n');
-  let script = [];
-  let turn = 0;
-
-  script.push({ speaker: '男', voice: TTS_CONFIG.maleVoice, text: `各位好，今天是${dateChinese}，欢迎收听每日简报。` });
-
-  for (const line of lines) {
+  for (const line of mdContent.split('\n')) {
     if (line.startsWith('## ')) {
-      const section = line.replace('## ', '').trim();
-      script.push({ speaker: '女', voice: TTS_CONFIG.femaleVoice, text: `下面是${section}。` });
-      turn = 0;
-      continue;
+      if (currentSection) sections.push({ title: currentSection, items: currentItems });
+      currentSection = line.replace('## ', '').trim();
+      currentItems = [];
     }
     const itemMatch = line.match(/^\d+\.\s*\*\*\[?(.+?)\]?\*\*\s*[—\-]\s*(.+)/);
     if (itemMatch) {
-      const title = itemMatch[1].trim();
-      let summary = itemMatch[2].replace(/\.{2,}\[阅读原文\]\([^)]+\)/, '。').replace(/\[阅读原文\]\([^)]+\)/g, '').trim();
-      const voice = turn % 2 === 0 ? TTS_CONFIG.femaleVoice : TTS_CONFIG.maleVoice;
-      const speaker = turn % 2 === 0 ? '女' : '男';
-      script.push({ speaker, voice, text: `${title}。${summary}` });
-      turn++;
-      continue;
+      let summary = itemMatch[2].trim();
+      summary = summary.replace(/\.{2,}\[阅读原文\]\([^)]+\)/, '').replace(/\[阅读原文\]\([^)]+\)/g, '').replace(/\*+/g, '').trim();
+      currentItems.push({ title: itemMatch[1].trim(), summary });
     }
     if (line.match(/^>\s*\*\*今日金句/)) {
       const qMatch = line.match(/>\s*\*\*今日金句\*\*[：:]\s*(.+)/);
-      if (qMatch) {
-        script.push({ speaker: '女', voice: TTS_CONFIG.femaleVoice, text: '今天的金句：' });
-        script.push({ speaker: '男', voice: TTS_CONFIG.maleVoice, text: qMatch[1].trim() });
+      if (qMatch) quote = qMatch[1].trim();
+    }
+  }
+  if (currentSection) sections.push({ title: currentSection, items: currentItems });
+  return { sections, quote };
+}
+
+function buildConversation(briefing, dateChinese) {
+  const { sections, quote } = briefing;
+  const M = '男'; const F = '女';
+  const mVoice = TTS_CONFIG.maleVoice;
+  const fVoice = TTS_CONFIG.femaleVoice;
+  let s = [];
+  function add(speaker, voice, text) { s.push({ speaker, voice, text }); }
+
+  // ===== 开场：轻松自然 =====
+  add(M, mVoice, `嘿，各位好，今天是${dateChinese}，欢迎收听每日简报。我是云希。`);
+  add(F, fVoice, '我是小晓。');
+  add(M, mVoice, '今天新闻不少，咱们捡重点的聊聊。');
+  add(F, fVoice, '对，不念稿，就挑几个最有意思的说说。');
+
+  // ===== 国内要闻 =====
+  const domestic = sections.find(sec => sec.title.includes('国内'));
+  if (domestic && domestic.items.length > 0) {
+    add(F, fVoice, '那先看看国内方面吧。');
+
+    // 挑前3条重点展开讨论
+    const top = domestic.items.slice(0, 3);
+    for (let i = 0; i < top.length; i++) {
+      const item = top[i];
+      if (i === 0) {
+        add(M, mVoice, `今天国内最值得关注的一个事儿：${item.title}。具体来说呢，${item.summary}`);
+        add(F, fVoice, '这事儿确实影响不小。你怎么看？');
+        add(M, mVoice, `我觉得这反映了一个大趋势。${i === 0 && item.summary.length > 20 ? '政策层面在往更规范、更透明的方向走。' : '值得继续观察后续发展。'}`);
+      } else {
+        const connectors = ['还有一条也挺重要的。', '另外值得一提的还有。', '再来看这条。'];
+        add(F, fVoice, connectors[i - 1]);
+        add(M, mVoice, `${item.title}。${item.summary}`);
+      }
+      // 互动
+      if (i < top.length - 1) {
+        add(F, fVoice, '嗯，这条信息量不小。');
+      }
+    }
+
+    // 如果还有更多，简要提一下
+    const rest = domestic.items.slice(3);
+    if (rest.length > 0) {
+      add(F, fVoice, `国内方面还有${rest.length === 1 ? '一条' : '几条'}值得了解的。`);
+      const titles = rest.map(r => r.title).join('；');
+      add(M, mVoice, `简单过一下：${titles}。感兴趣的可以看文字版简报。`);
+    }
+  }
+
+  // ===== 国际要闻 =====
+  const intl = sections.find(sec => sec.title.includes('国际'));
+  if (intl && intl.items.length > 0) {
+    add(F, fVoice, '好，咱们把目光转向国际。');
+    const top = intl.items.slice(0, 2);
+    for (let i = 0; i < top.length; i++) {
+      const item = top[i];
+      add(M, mVoice, `今天国际上最大的焦点：${item.title}。${item.summary}`);
+      if (i < top.length - 1) {
+        add(F, fVoice, `那另一条国际新闻呢？`);
+      }
+    }
+    if (intl.items.length <= 1) {
+      add(F, fVoice, '今天的国际新闻不算多，但这正好说明全球局势相对平静。');
+    }
+  }
+
+  // ===== AI 与科技 =====
+  const ai = sections.find(sec => sec.title.includes('AI') || sec.title.includes('科技'));
+  if (ai && ai.items.length > 0) {
+    add(F, fVoice, '最后咱们聊聊科技圈。今天AI领域又有不少新鲜事。');
+    const top = ai.items.slice(0, 3);
+    for (let i = 0; i < top.length; i++) {
+      const item = top[i];
+      if (i === 0) {
+        add(M, mVoice, `最让我兴奋的是这个：${item.title}。${item.summary}`);
+        add(F, fVoice, `哇，这个确实很有意思。技术发展比我们想象的快多了。`);
+      } else if (i === 1) {
+        add(F, fVoice, `还有这条也挺重磅的。`);
+        add(M, mVoice, `${item.title}。说白了就是${item.summary}`);
+      } else {
+        add(F, fVoice, `最后再提一个。`);
+        add(M, mVoice, `${item.title}。${item.summary}`);
       }
     }
   }
 
-  script.push({ speaker: '男', voice: TTS_CONFIG.maleVoice, text: '以上就是今天的全部内容，感谢收听，我们明天见。' });
-  return script;
+  // ===== 金句 =====
+  if (quote) {
+    add(F, fVoice, '好，又到了每天金句时间。');
+    add(M, mVoice, `今天想跟大家分享的一句话：${quote}`);
+    add(F, fVoice, '挺有启发的。你们觉得呢？');
+  }
+
+  // ===== 结束语 =====
+  add(M, mVoice, '好了，今天就聊到这儿。');
+  add(F, fVoice, '每天早上九点，我们准时更新。想看完整文字版可以访问我们的网站。');
+  add(M, mVoice, '我是云希。');
+  add(F, fVoice, '我是小晓。');
+  add(M, mVoice, '明天见！');
+
+  return s;
 }
 
 async function main() {
@@ -139,26 +170,16 @@ async function main() {
   }
 
   const mdContent = readFileSync(briefingFile, 'utf-8');
+  const briefing = parseBriefing(mdContent);
+  console.log(`解析: ${briefing.sections.length} 个版块, ${briefing.sections.reduce((sum, s) => sum + s.items.length, 0)} 条新闻`);
+
   const d = new Date();
   const dateChinese = `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
 
-  // Step 1: Generate dialogue (AI or fallback)
-  let script;
-  try {
-    const aiDialogue = await generateDialogueWithAI(mdContent, dateChinese);
-    script = parseDialogue(aiDialogue);
-    if (script.length < 5) {
-      console.log('AI 对话内容不足，使用降级模式');
-      script = fallbackDialogue(mdContent, dateChinese);
-    }
-  } catch (err) {
-    console.error('AI 对话生成失败:', err.message);
-    script = fallbackDialogue(mdContent, dateChinese);
-  }
-
+  const script = buildConversation(briefing, dateChinese);
   console.log(`对话脚本: ${script.length} 句`);
 
-  // Save dialogue text
+  // 保存对话稿
   const scriptsDir = join(__dirname, '..', 'public', 'scripts');
   if (!existsSync(scriptsDir)) mkdirSync(scriptsDir, { recursive: true });
   const scriptText = script.map(l => `【${l.speaker}】${l.text}`).join('\n\n');
@@ -170,7 +191,7 @@ async function main() {
     return;
   }
 
-  // Step 2: Generate audio segments
+  // 生成音频
   if (!existsSync(AUDIO_DIR)) mkdirSync(AUDIO_DIR, { recursive: true });
   const tmpDir = join(AUDIO_DIR, 'tmp_' + dateStr);
   mkdirSync(tmpDir, { recursive: true });
@@ -181,7 +202,7 @@ async function main() {
   for (let i = 0; i < script.length; i++) {
     const line = script[i];
     const segFile = join(tmpDir, `${String(i + 1).padStart(3, '0')}.mp3`);
-    const safeText = line.text.replace(/"/g, '\\"');
+    const safeText = line.text.replace(/"/g, '\\"').replace(/`/g, '\\`').replace(/\$/g, '\\$');
 
     try {
       execSync(
@@ -200,7 +221,7 @@ async function main() {
     return;
   }
 
-  // Step 3: Concatenate with ffmpeg
+  // ffmpeg 拼接
   const concatFile = join(tmpDir, 'concat.txt');
   writeFileSync(concatFile, segmentFiles.map(f => `file '${f.replace(/\\/g, '/')}'`).join('\n'), 'utf-8');
 
