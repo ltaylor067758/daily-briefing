@@ -2,9 +2,12 @@ name: Daily Briefing Builder
 
 on:
   schedule:
-    # 北京时间每天早上 9:00 (UTC 1:00)
+    # 多时段触发，防止 GitHub 调度器丢任务
+    # 北京时间 9:00 / 10:00 / 11:00 (UTC+8)
     - cron: '0 1 * * *'
-  workflow_dispatch:  # 允许手动触发
+    - cron: '0 2 * * *'
+    - cron: '0 3 * * *'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -20,44 +23,65 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Check if today's briefing exists
+        id: check
+        run: |
+          TODAY=$(date +%Y-%m-%d)
+          if [ "${{ github.event_name }}" = "schedule" ] && [ -f "src/content/briefings/${TODAY}.md" ]; then
+            echo "Today's briefing already exists, skipping scheduled run."
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Setup Node.js
+        if: steps.check.outputs.skip != 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
 
       - name: Setup Python
+        if: steps.check.outputs.skip != 'true'
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
       - name: Install system deps
+        if: steps.check.outputs.skip != 'true'
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg
 
       - name: Install npm deps
+        if: steps.check.outputs.skip != 'true'
         run: npm ci
 
       - name: Install Python deps
+        if: steps.check.outputs.skip != 'true'
         run: pip install edge-tts
 
       - name: Step 1 - Fetch RSS
+        if: steps.check.outputs.skip != 'true'
         run: node scripts/fetch-rss.js
 
       - name: Step 2 - AI Summarize
+        if: steps.check.outputs.skip != 'true'
         run: node scripts/ai-summarize.js
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL || 'https://api.deepseek.com/anthropic' }}
 
       - name: Step 3 - Generate Audio
+        if: steps.check.outputs.skip != 'true'
         run: node scripts/generate-audio.js
 
       - name: Step 4 - Build Astro site
+        if: steps.check.outputs.skip != 'true'
         run: npm run build
 
       - name: Commit generated content
+        if: steps.check.outputs.skip != 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -70,6 +94,7 @@ jobs:
           fi
 
       - name: Deploy to GitHub Pages
+        if: steps.check.outputs.skip != 'true'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
