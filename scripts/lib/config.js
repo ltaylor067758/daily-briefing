@@ -143,7 +143,7 @@ export const TTS_CONFIG = {
 
 export const FETCH_CONFIG = {
   timeout: 12000,         // 单源超时 ms
-  maxAgeHours: 24,        // 只保留最近 24 小时内的新闻
+  maxAgeHours: 36,        // 只保留最近 36 小时内的新闻
   maxItemsPerCategory: {
     domestic: 15,
     international: 15,

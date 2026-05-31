@@ -10,7 +10,9 @@
     "fetch": "node scripts/fetch-rss.js",
     "summarize": "node scripts/ai-summarize.js",
     "audio": "node scripts/generate-audio.js",
-    "pipeline": "node scripts/fetch-rss.js && node scripts/ai-summarize.js && node scripts/generate-audio.js"
+    "pipeline": "node scripts/fetch-rss.js && node scripts/ai-summarize.js && node scripts/generate-audio.js",
+    "check": "bash scripts/check.sh --audio",
+    "check:strict": "bash scripts/check.sh --strict --audio"
   },
   "keywords": [
     "news",

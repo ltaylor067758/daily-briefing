@@ -35,6 +35,11 @@
 - `scripts/push-via-api.js` — GitHub API 推送
 - `.github/workflows/daily-build.yml` — CI/CD
 
+### 自检脚本
+- `npm run check` — 跑全部 27 项检查，输出 ✓/✗/⚠
+- `npm run check:strict` — 严格模式，警告也失败
+- 每次改完代码在推送前跑一遍这个脚本
+
 ### 已知技术陷阱
 - edge-tts v7.2.8: `Communicate(ssml, voice)` 用位置参数，不用关键字
 - SSML `<mstts:express-as style="chat">` 在 `<speak><voice>` 内
