@@ -7,3 +7,6 @@ data/
 .agents/
 .claude/
 skills-lock.json
+pretrained_models/
+public/audio/tmp_*/
+public/audio/test_*.mp3

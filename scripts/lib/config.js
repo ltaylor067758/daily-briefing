@@ -137,6 +137,9 @@ export const TTS_CONFIG = {
   femaleVoice: 'zh-CN-XiaoxiaoNeural',
   rate: '-5%',
   outputDir: 'public/audio',
+  // CosyVoice2 instruct2 模式的声音描述
+  cosyVoiceMale: '用低沉温和的成熟男声，像朋友聊天一样自然放松地说，带一点幽默感',
+  cosyVoiceFemale: '用清亮活泼的年轻女声，像朋友聊天一样自然亲切地说，带一点好奇心',
 };
 
 // ===== 抓取配置 =====

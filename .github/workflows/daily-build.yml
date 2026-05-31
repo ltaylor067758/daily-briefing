@@ -25,7 +25,7 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 35
 
     steps:
       - name: Checkout repo
@@ -83,10 +83,17 @@ jobs:
       - name: Step 3 - Generate Audio
         if: steps.check.outputs.skip != 'true'
         run: node scripts/generate-audio.js
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL || 'https://api.deepseek.com/anthropic' }}
 
       - name: Step 4 - Build Astro site
         if: steps.check.outputs.skip != 'true'
         run: npm run build
+
+      - name: Step 5 - Self-check
+        if: steps.check.outputs.skip != 'true'
+        run: bash scripts/check.sh --audio
 
       - name: Commit generated content
         if: steps.check.outputs.skip != 'true'
