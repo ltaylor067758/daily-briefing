@@ -97,7 +97,7 @@ async function main() {
 
   // 5. Create a commit
   console.log('Creating commit...');
-  const commitMsg = 'feat: natural conversation podcast + richer design';
+  const commitMsg = process.env.COMMIT_MSG || 'chore: update files via API';
   const createCommitResp = await fetch(`${API}/git/commits`, {
     method: 'POST',
     headers,

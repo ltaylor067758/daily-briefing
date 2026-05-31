@@ -85,18 +85,6 @@ function buildConversation(briefing, dateChinese) {
   let lastSpeaker = null;
   function add(speaker, voice, text) { s.push({ speaker, voice, text }); lastSpeaker = speaker; }
 
-  // 短促回应，模拟聊天中的"嗯"、"对的"
-  const chimed = { count: 0 };
-  function chime(voice) {
-    // 每 8 句左右来一次自然的插话
-    if (chimed.count > 0 && Math.random() > 0.3) return;
-    const pool = ['嗯。', '对的。', '是这个意思。', '确实。', '没错。'];
-    const pick = pool[Math.floor(Math.random() * pool.length)];
-    add(lastSpeaker === M ? F : M, voice, pick);
-    chimed.count = 0;
-  }
-  chimed.count = Math.floor(Math.random() * 3);
-
   // ===== 开场 =====
   const pickOpen = createPicker([
     `嘿，早上好。今天是${dateChinese}，欢迎收听七尺的每日新闻播客。`,
@@ -139,8 +127,6 @@ function buildConversation(briefing, dateChinese) {
     ];
     add(presenter, pVoice, leads[Math.floor(Math.random() * leads.length)]);
 
-    chimed.count++;
-
     // Reactor 的反应：多是短句，偶尔追问
     const shortReacts = ['嗯，然后呢？', '这怎么讲？', '怎么说？', '嗯？', '有意思。'];
     const longReacts = [
@@ -157,7 +143,6 @@ function buildConversation(briefing, dateChinese) {
     const discussion = item.discussion || '';
     if (discussion) {
       add(presenter, pVoice, discussion);
-      chimed.count++;
       // 偶尔 reactor 简单回应
       if (Math.random() < 0.35) {
         const agree = ['嗯，有道理。', '了解了。', '明白。', '确实是这样。'];
