@@ -4,3 +4,6 @@ dist/
 data/
 .DS_Store
 .astro/
+.agents/
+.claude/
+skills-lock.json
