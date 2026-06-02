@@ -102,6 +102,62 @@ a:hover { color: var(--accent-glow); }
 }
 .site-nav a:hover { color: var(--accent); border-bottom-color: var(--accent); text-decoration: none; }
 
+/* ===== Neon Brand ===== */
+.neon-brand {
+  text-align: center;
+  padding: 1.6rem 0 0.4rem;
+  position: relative;
+  z-index: 1;
+}
+.neon-title {
+  font-family: var(--font-mono);
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #fff;
+  text-shadow:
+    0 0 3px #fff,
+    0 0 7px #fff,
+    0 0 15px #ffe0d6,
+    0 0 28px var(--accent),
+    0 0 55px var(--accent),
+    0 0 90px var(--accent),
+    0 0 140px rgba(240,112,80,0.55);
+  user-select: none;
+  animation: neon-flicker 5s ease-in-out infinite;
+}
+.neon-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 3.5px;
+  opacity: 0.55;
+  margin-top: 0.3rem;
+}
+@keyframes neon-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    text-shadow:
+      0 0 3px #fff,
+      0 0 7px #fff,
+      0 0 15px #ffe0d6,
+      0 0 28px var(--accent),
+      0 0 55px var(--accent),
+      0 0 90px var(--accent),
+      0 0 140px rgba(240,112,80,0.55);
+  }
+  20%, 24%, 55% {
+    text-shadow:
+      0 0 2px #fff,
+      0 0 5px #fff,
+      0 0 10px #ffe0d6,
+      0 0 20px var(--accent),
+      0 0 38px var(--accent),
+      0 0 65px var(--accent),
+      0 0 100px rgba(240,112,80,0.4);
+  }
+}
+
 /* ===== Date Badge ===== */
 .date-badge {
   font-family: var(--font-mono);
