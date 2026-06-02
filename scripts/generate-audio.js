@@ -144,11 +144,16 @@ async function generateConversation(briefing, dateChinese) {
 - 全文一共 35-55 句
 
 ### 角色设定
-- **男（云希）**：理性分析型。喜欢挖逻辑、找因果、做类比。偶尔冷幽默。
-- **女（小晓）**：直觉感受型。善于发现事件对人的影响，会带情绪评论。节奏感好，负责推进话题转换。
+- **男声**：理性分析型。喜欢挖逻辑、找因果、做类比。偶尔冷幽默。
+- **女声**：直觉感受型。善于发现事件对人的影响，会带情绪评论。节奏感好，负责推进话题转换。
+
+### 禁止事项
+- **绝对不要**让主持人说出自己的名字或做自我介绍
+- **绝对不要**出现"我是...""我叫...""大家可以叫我..."等自我介绍
+- 对话中只以"男""女"标注，听众不需要知道主持人叫什么
 
 ### 结构参考（不要生硬套用，自然流转）
-- 开场：互打招呼，一两句导入（3-5句）
+- 开场：直接开始聊新闻，不说"欢迎收听""我是xxx"之类的客套话（2-3句）
 - 国内：挑 2-3 个最有讨论价值的深度聊，其余快速过（12-18句）
 - 国际：同样逻辑（10-15句）
 - AI/科技：挑最有意思的聊，语气可以兴奋一点（8-12句）
@@ -226,8 +231,8 @@ function buildFallbackConversation(briefing, dateChinese) {
 
   function add(speaker, voice, text) { script.push({ speaker, voice, text }); lastSpeaker = speaker; }
 
-  add(M, mVoice, `嘿，早上好。今天是${dateChinese}，欢迎收听七尺的每日新闻播客。`);
-  add(F, fVoice, '今天信息量不小，咱们慢慢聊。');
+  add(M, mVoice, `早。今天是${dateChinese}，来看看今天有什么新闻。`);
+  add(F, fVoice, '嗯，信息量不小，咱们直接开始。');
   add(M, mVoice, '先从国内开始。');
 
   for (const sec of sections) {
