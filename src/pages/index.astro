@@ -15,8 +15,9 @@ if (latest) {
   const body = latest.body || '';
 
   // Parse sections from markdown body
-  const sections: { label: string; items: { title: string; summary: string; url: string; sourceName: string }[] }[] = [];
+  const sections: { label: string; type: string; items: { title: string; summary: string; url: string; sourceName: string }[] }[] = [];
   let currentLabel = '';
+  let currentType = '';
   let currentItems: typeof sections[0]['items'] = [];
   let quoteText = '';
   let itemIndex = 0;
@@ -26,9 +27,15 @@ if (latest) {
     // Section header
     if (line.match(/^##\s/)) {
       if (currentLabel && currentItems.length > 0) {
-        sections.push({ label: currentLabel, items: [...currentItems] });
+        sections.push({ label: currentLabel, type: currentType, items: [...currentItems] });
       }
-      currentLabel = line.replace(/^##\s*/, '').trim();
+      const rawLabel = line.replace(/^##\s*/, '').trim();
+      // strip emoji
+      currentLabel = rawLabel.replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{1F900}-\u{1F9FF}\u{200D}\u{FE0F}]/gu, '').replace(/^\s+/, '');
+      if (rawLabel.includes('国内')) currentType = 'domestic';
+      else if (rawLabel.includes('国际')) currentType = 'international';
+      else if (rawLabel.includes('AI') || rawLabel.includes('科技')) currentType = 'ai';
+      else currentType = 'default';
       currentItems = [];
       continue;
     }
@@ -79,7 +86,7 @@ if (latest) {
 
   // Don't forget the last section
   if (currentLabel && currentItems.length > 0) {
-    sections.push({ label: currentLabel, items: [...currentItems] });
+    sections.push({ label: currentLabel, type: currentType, items: [...currentItems] });
   }
 
   const audioFile = latest.data.audio || `/audio/${date}.mp3`;
@@ -110,7 +117,7 @@ function formatDateChinese(dateStr: string): string {
         {
           briefingContent.sections.map(section => (
             <section class="news-section">
-              <h2 class="section-header">{section.label}</h2>
+              <h2 class="section-header" data-section={section.type}>{section.label}</h2>
               {section.items.map((item: any, i: number) => (
                 <NewsCard
                   index={i + 1}

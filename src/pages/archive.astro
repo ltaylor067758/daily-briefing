@@ -7,12 +7,12 @@ const sorted = briefings.sort((a, b) => b.data.date.localeCompare(a.data.date));
 ---
 
 <Layout title="归档 · 每日简报">
-  <h1>📂 历史简报</h1>
+  <h1>历史简报</h1>
 
   {
     sorted.length === 0 ? (
       <div class="empty-state">
-        <div class="icon">📭</div>
+        <div class="icon">&#9744;</div>
         <h2>暂无历史简报</h2>
         <p>内容管线启动后，这里将按日期展示所有往期简报。</p>
       </div>
