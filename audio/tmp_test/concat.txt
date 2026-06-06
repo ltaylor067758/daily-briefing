@@ -1,0 +1,4 @@
+file 'C:/Users/25881/daily-briefing/public/audio/tmp_test/001.mp3'
+file 'C:/Users/25881/daily-briefing/public/audio/tmp_test/002.mp3'
+file 'C:/Users/25881/daily-briefing/public/audio/tmp_test/003.mp3'
+file 'C:/Users/25881/daily-briefing/public/audio/tmp_test/004.mp3'
