@@ -4,141 +4,129 @@
 
 【男】先从国内开始。
 
-【男】国家统计局：1—5月份电子行业利润同比增长103.9%。财联社6月27日电，国家统计局工业司首席统计师于卫宁解读2026年1—5月份工业企业利润数据。于卫宁表示，电子行业支撑作用明显。1—5月份，规模以上装备制造业利润同比增长14.1%，拉动全部规模以上工业企业利润增长5.2个百分点。从行业看，全球人工智能技术变革带来高端算力芯片和存储芯片需求爆发，推动
-
-【女】这怎么讲？
-
-【男】还有一条。
-
-【女】我国核聚变堆超导磁体研发取得重要突破。6月27日，国家重大科技基础设施“聚变堆主机关键系统综合研究设施”最大的超导部件——环向场磁体完成最后制备工艺，并通过专家验收。同时，高温超导中心螺管线圈磁体也完成满工况参数测试，核心性能达到国际领先水准。环向场磁体是目前国际上体积最大的聚变堆超导磁体。该磁体长21米、宽12米、高3.3米，总重量达
-
-【男】展开说说？
-
-【女】接着说。
-
-【男】国家统计局：1—5月采矿业实现利润总额4795.2亿元，同比增长33.5%。6月27日，据国家统计局，2026年1—5月份，采矿业实现利润总额4795.2亿元，同比增长33.5%；制造业实现利润总额23285.2亿元，增长20.0%；电力、热力、燃气及水生产和供应业实现利润总额3359.2亿元，下降2.7%。（证券时报）
-
-【女】展开说说？
-
-【男】再来看这个。
-
-【女】国家统计局：1—5月份规模以上工业企业实现营业收入56.55万亿元，同比增长5.5%。6月27日，据国家统计局，2026年1—5月份，规模以上工业企业实现营业收入56.55万亿元，同比增长5.5%；发生营业成本48.04万亿元，增长4.7%；营业收入利润率为5.56%，同比提高0.63个百分点。5月末，规模以上工业企业资产总计193.55万亿元，同比增长5.8%；负债合计112.69
-
-【男】嗯，然后呢？
-
-【女】还有一条。
-
-【男】国家统计局：1—5月份全国规模以上工业企业利润增长18.8%。6月27日，据国家统计局，2026年1—5月份，全国规模以上工业企业实现利润总额31439.6亿元，同比增长18.8%。1—5月份，规模以上工业企业中，国有控股企业实现利润总额10486.6亿元，同比增长19.6%；股份制企业实现利润总额24348.1亿元，增长24.1%；外商及港澳台投资企业实现利
+【男】华为途灵平台完成3轮升级，覆盖鸿蒙智行五界。36氪获悉，6月26日，鸿蒙智行举办了一场华为途灵平台专场TECH DAY技术沟通会。华为途灵平台依托华为在AI和通信领域的技术优势，将调校经验通过算法与软件沉淀，提升机械性能上限，并基于车型定位不断开放新的特性，快速迭代。在操控层面，华为途灵平台的全维感知系统融合了ADS感知信息、车辆状态信息、驾
 
 【女】这怎么讲？
 
 【男】接着说。
 
-【女】G7易流发布货运行业首款穿戴式AI硬件「拍拍豆」，填平物流交付的“最后两米”｜最前线。作者｜黄楠 编辑｜袁斯来 6月25日，G7易流发布货运行业首款穿戴式AI硬件“拍拍豆”。这款产品克重仅30克，采用磁吸设计，当车辆熄火停稳后，司机可直接将设备从挡风玻璃底座取下，佩戴于胸前即可自动启动录制；放回底座瞬间，录制文件将自动同步上传云端存储。 从“看见车上”到“看见车下”，物流AI的应用场
-
-【男】这怎么讲？
-
-【女】还有一条。
-
-【男】9点1氪｜苹果涨价引山姆代购潮；DeepSeek大规模招聘；黄金再度跌破4000美元。今日热点导览 OpenAI官宣推出GPT-5.6 亚洲“果链”股价几乎全线大幅下跌 SpaceX计划为美国消费者推出新的星链移动服务 美团股价低迷，王兴回应 小鹏机器人调整：新设九部门，何小鹏兼任产品部负责人 微信回应朋友圈互动规则：单删原封不动，互删清空对方全部痕迹 TOP3大新闻 苹果涨价引山姆
-
-【女】这怎么讲？
-
-【男】还有一条。
-
-【女】理想首谈电池品牌争议：不管谁家电池，都是理想汽车兜底。图源视觉中国 动力电池一直是新能源汽车里高频博弈的战场。 它通常占据一辆新能源车30%-40%的BOM（物料）成本；与此同时，作为电车心脏，又直接决定续航、补能效率、安全性和寿命等核心体验，是少数能够同时影响产品力与成本结构的零部件。 这意味着，围绕动力电池的博弈在车企与供应商之间，甚至电池产业内部
+【女】功率半导体再启阶梯式调价，有厂商表示“AI相关的电源功率订单爆满，根本做不过来”。据《科创板日报》27日消息，由于AI算力集群功耗激增，功率半导体正成为存储之后的产业新增长引擎，行业再掀起一轮涨价潮。“我们AI相关的电源功率订单‘爆满’，现在订单根本做不过来”。一家功率半导体厂商人士向《科创板日报》记者表示，“因为公司算是少数具备量产能力的国产厂商，无论是面向数据中心800V H
 
 【男】嗯，然后呢？
 
-【男】Cape Verde qualify for World Cup Round of 32, set up date with Argentina。Cape Verde's third draw gives them a second-place finish in Group H and pits them against the world champions in the knockouts
+【女】还有一条。
+
+【男】具身世界模型“我悟”通过合规备案。6月26日，北京人形机器人创新中心慧思开物平台的双大脑模型天鹕（Pelican-VL）和我悟（WoW）同步完成北京市网信办最新一批生成式人工智能服务备案。北京人形将正式启动慧思开物全系列模型Token服务，计划分阶段面向产业客户、科研机构、开发者全面开放API调用能力。（界面新闻）
 
 【女】嗯，然后呢？
 
 【男】接着说。
 
-【女】Newly released video exposes Henry Nowak killer’s lies。Newly released footage has exposed the series of lies that led UK police to arrest a dying stabbing victim
+【女】兴业银行：上调代理上海黄金交易所个人贵金属买卖业务延期合约保证金比例。6月27日，兴业银行发布公告，将在北京时间2026年6月27日（周一）收盘清算时起，调整代理上海黄金交易所个人贵金属买卖业务延期合约保证金比例，个人客户AU（T+D）、mAU（T+D）、AU（T+N1）、AU（T+N2）、AG（T+D）等延期合约的保证金比例由40%调整至120%。其它黄金投资产品不
 
 【男】展开说说？
 
 【女】还有一条。
 
-【男】Trump justifies strikes on Iran amid ceasefire。The US has struck Iran in retaliation for what it says was an Iranian attack on a ship in the Strait of Hormuz
+【男】因利润腰斩，梅赛德斯-奔驰推迟9万名德国员工奖金并谋求无薪延长工时。6月27日，据报道，由于利润大幅下滑，梅赛德斯-奔驰正被迫采取严厉的紧缩措施。公司已决定将约9万名加入工会的德国员工原定于2026年7月发放的“转型奖金”（相当于月薪的18.4%）推迟9个月至2027年4月发放，并保留在业务未见好转时完全取消该奖金的权利。此外，管理层还在公开探讨将每周工作时间从35
 
 【女】这怎么讲？
 
-【男】再来看这个。
+【男】接着说。
 
-【女】Iran war live: US strikes Iran after attack on vessel in Strait of Hormuz。Iran's IRGC says it targeted US military in region after Trump administration launched attack on the country
-
-【男】嗯，然后呢？
-
-【女】还有一条。
-
-【男】Paris Diamond League to go ahead with safety measures amid heatwave。Only competitions involving professional athletes will be held, with all other activities cancelled
-
-【女】这怎么讲？
-
-【男】还有一条。
-
-【女】US judge holds prosecutor in contempt in Charlie Kirk murder case。Judge says comments to the media by prosecutors about defendant violate rules of what can be said outside of court
+【女】主力资金大调仓，超267亿元撤出“易中天”。6月27日，本周（6月22日—26日），A股市场震荡调整。截至6月26日收盘，上证指数、深证成指、创业板指本周分别累计下跌1.55%、1.55%、1.37%，科创50指数本周累计大涨6.32%。资金面上，本周沪深两市主力资金合计净流出2169.35亿元。主力资金大幅流出科技股，本周“易中天”（新易盛
 
 【男】这怎么讲？
 
 【女】再来看这个。
 
-【男】Venezuela shaken by magnitude 4.9 tremor days after major earthquakes。The country is still reeling from devastating pair of earthquakes that killed hundreds of people earlier this week
+【男】电影《给阿嬷的情书》总票房破19亿元。36氪获悉，6月27日，据猫眼专业版数据，电影《给阿嬷的情书》上映59天，总票房破19亿元。
+
+【女】展开说说？
+
+【男】还有一条。
+
+【女】余承东：全新一代问界M9系列大定破42000台。6月27日，华为常务董事、产品投资评审委员会主任、终端BG董事长余承东在微博发文称，全新一代问界M9系列，上市1个月大定破42000台。全国交付已开启。（证券时报）
+
+【男】嗯，然后呢？
+
+【男】US launches second night of strikes on Iran after ship hit by drone。The attacks come after an alleged Iranian drone struck another commercial vessel in the Strait of Hormuz on Saturday
 
 【女】展开说说？
 
 【男】接着说。
 
-【女】Egypt vs Iran LIVE: FIFA World Cup 2026。Live updates, score and commentary stream as Mohamed Salah's Egypt play Iran in the final group match in Seattle
+【女】Videos show Israeli settlers trying to seize house in occupied West Bank。Videos show Israeli settlers trying to seize a house under construction in the occupied West Bank
+
+【男】展开说说？
+
+【女】再来看这个。
+
+【男】Donald Trump nominates ex-state trooper Lance Schroyer as ICE director。The immigration enforcement agency has been without a Senate-confirmed director since 2017, during Trump's first term
+
+【女】嗯，然后呢？
+
+【男】还有一条。
+
+【女】Colombia vs Portugal LIVE: FIFA World Cup 2026。Follow updates as the top two teams in Group K face off - including the build-up, analysis and live text commentary
 
 【男】这怎么讲？
+
+【女】还有一条。
+
+【男】Serbia’s President Aleksandar Vucic says will resign within ‘weeks’。Vucic is under ⁠pressure after months ⁠of antigovernment protests
+
+【女】展开说说？
+
+【男】再来看这个。
+
+【女】Another powerful magnitude 4.8 earthquake hits near Venezuela。The latest quake comes as rescuers are still searching for survivors of the twin 7.2 and 7.5 earthquakes on Wednesday
+
+【男】嗯，然后呢？
+
+【女】还有一条。
+
+【男】DR Congo superfan denied US visa to support team at World Cup。Michel Kuka Mboladinga is iconic for his motionless tribute at DRC games, but a US World Cup repeat has been denied
+
+【女】展开说说？
+
+【男】还有一条。
+
+【女】Why is Crimea critical to the Russia–Ukraine war?。Ukraine is intensifying attacks on Russian-controlled Crimea as Kyiv tries to pressure Moscow into ending the war
+
+【男】这怎么讲？
+
+【男】BrowserBC：克隆人类点击，让一次网页操作转化为所有Agent的能力。人类一次录制，Agent就能模拟
+
+【女】这怎么讲？
+
+【男】再来看这个。
+
+【女】CVPR 2026最热方向，被一家杭州团队率先跑进了端侧！。VLM- R1之后再次出手！全球首个端侧流式多模态来了！
+
+【男】展开说说？
+
+【女】再来看这个。
+
+【男】俄西双城游记：莫斯科时代折叠，圣彼得堡文化巡礼。在莫斯科的时代折叠与彼得堡的文化巡礼之间，发现俄罗斯的不同面貌。查看全文
+
+【女】展开说说？
+
+【男】还有一条。
+
+【女】刚刚，GPT-5.6 正式发布，史上最强但被自己坑惨了。当模型能力逼近关键阈值，使用资格与使用方式，将成为比性能更为关注的事项。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。
+
+【男】这怎么讲？
+
+【女】接着说。
 
 【男】GPT-5.6突然发布！Fable5痛失最强基模王座。一口气端出三款GPT 5.6系列模型
 
 【女】这怎么讲？
 
-【男】还有一条。
-
-【女】对话网翎 CEO 刘宇：《镖人》剧组用的卫星通讯，我希望多数人也用得到丨多样性公司。卫星通信应该是人人都可以用到的技术。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。
-
-【男】展开说说？
-
-【女】接着说。
-
-【男】本周看什么 | 最近值得一看的 10 部作品。📅本周新预告《克拉拉与太阳》首支预告6月23日，电影《克拉拉与太阳》发布了首支预告，将于10月23日在北美上映。塔伊加·维迪提执导，詹娜·奥尔特加、艾米·亚当斯主演，改编自石黑一雄的同名小说，人工智能 ...查看全文
-
-【女】这怎么讲？
-
-【男】再来看这个。
-
-【女】探索快捷指令的上限：用网页视图创建丰富界面与交互。从锁屏按钮、锁屏小组件、负一屏小组件，到桌面小组件、控制中心、Siri、自动化触发……iPhone的快捷指令有着超级多的打开方式，我们也可以为自己写的或从网络上获取的实用快捷指令设置一种最顺手的。与之 ...查看全文 本文为会员文章，出自《单篇文章》，订阅后可阅读全文。
-
-【男】展开说说？
-
-【女】还有一条。
-
-【男】空调续命之外的清凉：这是我们的夏日降温「新」方案。当夏天的热浪席卷城市，北方在烈日下承受着如烤箱般的双面炙烤，南方在骄阳下忍受着如蒸笼般的闷湿高温，能够每天陪伴我们的「降温好物」成为必需。又是一年盛夏时，我们邀请了6位少数派作者，聊聊那些真正融入日常 ...查看全文
-
-【女】嗯，然后呢？
-
 【男】接着说。
 
-【女】我在 MWC 上找到了折叠屏最该有的样子。让折叠屏展开以后，不再只是大号手机，而是千人千面的「原子工作台」。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。
-
-【男】这怎么讲？
-
-【女】再来看这个。
-
-【男】华勤技术与正行创新达成战略合作，加速机器人“走进工厂、走上产线”。共建工业物理智能“数据底座与智能大脑”
-
-【女】展开说说？
-
-【男】接着说。
-
-【女】林檎越东瀛：苹果的日本之旅。当年「林檎渡东瀛」的试探，终演变成一场与亚洲产业命运相依的交响。查看全文
+【女】早报｜GPT-5.6正式亮相，但你可能还用不了/微软将上调Xbox主机价格/大疆回应Pocket 4P开售秒空。· 曝苹果跳过 M6 Pro/Max，M7 系列直接主打 AI 性能 · 删除好友后朋友圈互动还在吗？微信公布显示逻辑 · 何小鹏：年底自动驾驶可合法进入全球市场 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。
 
 【男】展开说说？
 
