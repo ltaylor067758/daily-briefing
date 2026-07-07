@@ -4,143 +4,143 @@
 
 【男】先从国内开始。
 
-【男】亚马逊云服务发布AWS SimuLearn学习计划徽章，提供云端实践技能可信验证。亚马逊云服务（AWS）当地时间7月6日宣布推出AWS SimuLearn学习计划徽章，旨在为学习者提供一种全新且可验证的凭证，以证明其具备设计、构建和验证云端解决方案的实操经验。亚马逊称，学习者只要完成某个SimuLearn学习计划中的所有实操任务并成功通过验证，即可获得官方颁发的AWS徽章，作为其
-
-【女】嗯，然后呢？
-
-【男】还有一条。
-
-【女】今年1至5月我国机器人规上企业营业收入突破900亿元。7月6日举行的2026世界机器人大会新闻发布会上介绍，今年1到5月，我国机器人规上企业营业收入突破900亿元，同比增长26.9%。我国已经连续十三年成为全球最大工业机器人市场，自主品牌工业机器人在国内市场的占有率突破50%。（央视新闻）
-
-【男】展开说说？
-
-【女】接着说。
-
-【男】中信建投：投资窗口可能出现在降息尾声、宽松预期充分定价、DR007企稳或资金利率回升阶段。36氪获悉，中信建投指出，国内浮息债规模不大但结构集中，当前以政策性金融债为主，挂钩基准以DR007和LPR为核心。浮息债相对固息债的优势并非无条件成立，关键取决于无风险利率与挂钩基准利率的组合变化：当DR007或LPR上行并带动票息重定价时，浮息债相对占优；若无风险利率上行而基准利率下行或低位运行
+【男】三星开始量产用于英伟达Vera Rubin平台的先进固态硬盘。三星电子已开始量产其最先进的数据中心存储设备，这一产品将在英伟达即将推出的Vera Rubin平台内使用。这款企业级固态硬盘产品叫做PM1763，于今年早些时候在英伟达GTC大会上发布。三星当时将它与下一代高带宽内存HBM4和低功耗模块SOCAMM2一起展示，作为专为AI数据中心设计的综合方案的一部
 
 【女】展开说说？
 
-【男】再来看这个。
+【男】还有一条。
 
-【女】日本5月劳动现金收入同比增长3.2%。日本5月劳动现金收入同比增长3.2%，预期3.40%，前值由3.50%修正为3.60%。（财联社）
+【女】奈飞、迪士尼和YouTube拟竞购下届世界杯美国转播权，版权费或达20亿美元。据报道，奈飞、迪士尼和YouTube有意同福克斯竞购2030年和2034年世界杯美国转播权，亚马逊与苹果也可能入局。知情人士称，预计国际足联与潜在媒体合作伙伴的谈判将在未来三个月内启动。今年早些时候的初步会谈中，国际足联已向各媒体公司通报，针对美国市场的英语和西班牙语转播权很可能会捆绑出售，而不再像
 
-【男】展开说说？
+【男】这怎么讲？
 
 【女】还有一条。
 
-【男】华泰证券：看好受益AI产品迭代浪潮的二手消费电子细分赛道。36氪获悉，华泰证券认为二手经济并非消费降级催生的阶段风口，而是经济发展及消费理念趋于成熟后的时代趋向，当前正处于供需共振、政策支持与商业模式持续优化的黄金发展期：供给端，过去30年经济高速发展储备的优质闲置商品，叠加宏观经济提质换挡期居民“断舍离”意愿增强，为市场提供了充裕供给和周转效率。需求侧，
+【男】摩根大通：投资者低估了特斯拉与SpaceX合并的潜在障碍。摩根大通分析师Rajat Gupta表示，尽管特斯拉和SpaceX合并“纸面上看起来合情合理”，但目前围绕合并的猜测低估了阻碍交易的潜在障碍。Gupta称，合并将使首席执行官埃隆·马斯克能够“合并两大平台的愿景、使命和工程领导力”，两家公司共同的人工智能雄心将成为“潜在的战略黏合剂”。不过，这位分析
+
+【女】这怎么讲？
+
+【男】还有一条。
+
+【女】多重积极因素共振，港股市场迎阶段性修复窗口。近期，多重积极因素共振，港股市场迎来久违的反弹。Wind数据显示，恒生科技指数上周累计上涨5.72%，创下年内最大单周涨幅；本周前两个交易日，港股延续反弹态势。截至7月7日收盘，恒生科技指数年内跌幅已收窄至18.29%。市场人士认为，估值底、流动性改善与AI叙事切换三重因素共振，驱动恒生科技指数强势
+
+【男】这怎么讲？
+
+【女】还有一条。
+
+【男】斯泰兰蒂斯将在美国开售菲亚特Topolino微型电动车，起售价13995美元。克莱斯勒母公司斯泰兰蒂斯周二宣布，美国市场正式开放菲亚特Topolino纯电动微型代步车的预订通道，车型基础售价13995美元。虽然Topolino外观酷似菲亚特500这类小型乘用车，但它本质属于低速四轮轻机动车，驾乘定位更贴近高尔夫代步车。（新浪财经）
 
 【女】这怎么讲？
 
 【男】再来看这个。
 
-【女】氪星晚报｜佑驾创新正式发布四轮足机器人；千问大模型升级实时语音识别大模型Fun-ASR-Realtime。大公司： 郭明錤爆料最新苹果折叠手机：出货量明显不足，或重现“饥饿营销” 知名分析师郭明錤分析指出，苹果可折叠iPhone预计2026年下半年出货，但初期供应可能不足。他称自己的行业调查显示，2026年下半年可折叠iPhone的组装出货量约为700万至800万部，第三季度出货量约为50万至100万部
+【女】瑞为技术暗盘破发，收盘跌17%｜敲钟时刻。《敲钟时刻》栏目聚焦企业正式登陆资本市场的关键时刻。每一次敲钟之后，市场都会给出它对一家企业增长、估值与成色的第一重答案。 在7月7日下午的暗盘，视觉具身智能第一股瑞为技术（07656.HK）破发了。暗盘收在17.99港元，较21.66港元的发行价跌16.94%，对应市值54.92亿港元。 整个暗盘
 
-【男】嗯，然后呢？
+【男】这怎么讲？
 
-【女】接着说。
+【女】再来看这个。
 
-【男】获DCM Ventures投资数百万美元，APTSell希望成为AI版的首席销售官｜涌现新项目。文｜吴思瑾 编辑｜邓咏仪 01 一句话介绍 北京治真治合科技有限公司成立于2024年，旗下产品「APTSell」（AI Power To Sales）希望成为AI版的CSO （Chief Sales Officer，首席销售官）。 简单来说，APTSell是一个组合式Agent，通过整合与可视化销售
+【男】易控智驾暗盘破发：盘中一度跌近两成、收涨4%｜敲钟时刻。《敲钟时刻》栏目聚焦企业正式登陆资本市场的关键时刻。每一次敲钟之后，市场都会给出它对一家企业增长、估值与成色的第一重答案。 上市前夜，全球矿区无人驾驶第一股易控智驾（07687.HK）在富途暗盘走出一条 V 形。截至 7 月 7 日 18:30 暗盘收盘，报 91.50 港元，较发行价 87.92
 
-【女】嗯，然后呢？
+【女】展开说说？
+
+【男】再来看这个。
+
+【女】氪星晚报 ｜苹果折叠屏已在量产；潘功胜：香港可以抓住有利时机，吸引更多主权财富和国际企业到港发债融资。大公司： 网传“7月1日新规：新车智驾芯片自主化率不低于70%”系谣言 36氪获悉，近日，有网民发布题为《7月1日新规正式落地！新车智驾芯片自主化率不低于70%》的文章。文中称“7月1日，工信部联合市监总局出台的《新能源汽车车规级AI芯片技术规范》正式强制执行”，并称“国内生产、销售的所有新能源乘用
+
+【男】展开说说？
+
+【男】Switzerland face Argentina in World Cup quarterfinal after beating Colombia。Switzerland beat Colombia on penalties in World Cup last 16 to set up quarterfinal meeting with Argentina
+
+【女】展开说说？
 
 【男】接着说。
 
-【女】36氪首发｜前西门子、罗罗电动飞行团队创业做航空电驱系统，两轮连融数千万元。本文约3000字，建议阅读6分钟 作者 | 乔钰杰 编辑 | 袁斯来 硬氪获悉，开普动能航空技术有限责任公司（以下简称“开普动能”）近期连续完成种子轮及天使轮融资，两轮融资合计金额达数千万元人民币，由零以资本领投、新鼎资本跟投，唯快资本担任长期财务顾问。 随着eVTOL产业进入工程化阶段，航空电驱系
+【女】Russian missiles strike Ukraine’s capital, Kyiv, for third time in a week。The attacks have triggered fires in two districts of Kyiv, according to the city's mayor
 
 【男】嗯，然后呢？
 
-【男】Leading US Democrats withdraw support for Platner after assault allegations。Monday's accusations are the latest in a long string of controversies surrounding the Maine Democratic Senate candidate
+【女】还有一条。
+
+【男】Egypt buoyed by praise for World Cup heroics despite controversial exit。From fans in Gaza to world leaders and supporters on social media, Egypt won hearts, even if they lost to Argentina
 
 【女】这怎么讲？
 
-【男】还有一条。
+【男】接着说。
 
-【女】All to know about Ronaldo’s World Cup career as it ends in Spain loss。The Portuguese captain became the only player to score in six different World Cups after his brace against Uzbekistan
+【女】Egypt were ‘cheated’ in World Cup loss to Argentina, coach Hassan says。'Perhaps they wanted to keep the world champions in the competition,' Hassan said after his team was knocked out
 
-【男】这怎么讲？
+【男】嗯，然后呢？
 
-【女】接着说。
+【女】还有一条。
 
-【男】Late Spain goal eliminates Portugal, ends Ronaldo’s international career?。Sub Mikel Merino scores in stoppage time to give Spain a 1-0 win over Portugal in the last 16
+【男】US says strikes launched as explosions heard in southern Iran。US strikes in Iran come a day after Qatari, Saudi tankers hit in attacks in Strait of Hormuz
 
 【女】展开说说？
 
-【男】再来看这个。
+【男】还有一条。
 
-【女】Canada picks Germany’s TKMS for new submarines。The German-owned naval shipbuilder made the bid with NATO ally Norway, beating out South Korea's Hanwha Ocean
+【女】Nasdaq vs Dow: How are the key indices different as SpaceX joins one?。SpaceX joins Nasdaq-100 after IPO, bypassing traditional three-month trading rule for inclusion in the tech-heavy index
 
-【男】嗯，然后呢？
+【男】这怎么讲？
 
-【女】接着说。
+【女】还有一条。
 
-【男】‘If you win, it’s a stain’: Americans react to FIFA-Balogun controversy。USA supporters divided on Trump's intervention and FIFA's decision to suspend striker's ban in Belgium World Cup match
-
-【女】这怎么讲？
-
-【男】再来看这个。
-
-【女】One Phone Call, One Vanishing Red Card — The Balogun Scandal。Al Jazeera's Basel Ghazoghli (@baselgazi) breaks down how the White House helped Folarin Balogun stay in the World Cup
-
-【男】展开说说？
-
-【女】再来看这个。
-
-【男】Morocco says it has dismantled ISIL-linked cell planning attack。Police arrest 10 suspects, seizing bladed weapons, military-style clothes and bomb‑making instructions
+【男】Venezuela buries earthquake victims as death toll reaches 3,535。Mass burials have begun at La Esperanza Cemetery in Venezuela's La Guaira
 
 【女】这怎么讲？
 
 【男】还有一条。
 
-【女】Influencers say they’re ‘honoured’ to attend Khamenei funeral。Several social media influencers travelled to Iran for the state funeral of Supreme Leader Ali Khamenei
+【女】Pro-Palestine MEP Rima Hassan arrives at trial for ‘glorifying terrorism’。‘No one is safe anymore.’ This is what French MEP Rima Hassan told a crowd as she arrived at her trial in Paris
 
 【男】这怎么讲？
 
-【男】预售 25.98 万元起！全新坦克 300 轴距加长，舒适性大提升。拉长轴距的坦克 300，比原来更硬派。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。
+【男】极飞发布了空中及地面农业机器人，打农药这事儿基本不需要人力参与了。农活就得机器人来干。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。
+
+【女】展开说说？
+
+【男】还有一条。
+
+【女】DeepSeek招聘被「华为天才少年」公开吐槽，“面到最不专业的”。难怪DeepSeek要着重强调招HR（doge）
+
+【男】这怎么讲？
+
+【女】再来看这个。
+
+【男】家庭饮品 DIY 指南（二）：常用液体物料推荐。往期文章：（一）工欲善其事，必先利其器这一篇我来跟大家聊聊各类物料的选择方法。虽然是选择方法，但我依旧建议大家买少量的物料尝试一下口感，多找一些同类产品对比，找一个自己喜欢的口感的产品作为原料。另外会 ...查看全文 本文为会员文章，出自《单篇文章》，订阅后可阅读全文。
 
 【女】嗯，然后呢？
 
 【男】再来看这个。
 
-【女】纯电 C 级、燃油小 G，奔驰史上最大新车潮要来了。从轿车、SUV 到高性能跑车。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。
+【女】机器人走进产线「打工」，至简动力不想让具身智能停在 PPT 上。具身智能能进厂打工，就是巨大的进步。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。
 
-【男】这怎么讲？
-
-【女】再来看这个。
-
-【男】实测腾讯 Hy3 正式版，这次终于赶上了「AI 下半场」。榜单成绩比肩 GLM-5.2 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。
-
-【女】这怎么讲？
-
-【男】还有一条。
-
-【女】派评 | 近期值得关注的 App。>下载少数派2.0客户端、关注少数派公众号，解锁全新阅读体验📰>实用、好用的正版软件，少数派为你呈现🚀查看全文
-
-【男】展开说说？
+【男】嗯，然后呢？
 
 【女】还有一条。
 
-【男】模型不是企业的护城河，那什么才是？。大模型越来越强，为什么企业没有跟着变强
+【男】社区速递 148 | 派友的全屋智能实操、水月雨布丁耳机与MUJI可调节毛巾枕。除了首页时间流和侧栏的精选展位，少数派Matrix社区还有很多优秀内容因条件所限无法得到有效曝光，因此我们决定重启Matrix周报，并在此基础上添加更多社区内容、作者投稿新玩意呈现给大家。上周社区速递 ...查看全文
+
+【女】嗯，然后呢？
+
+【男】再来看这个。
+
+【女】Marshall BROMLEY 450 派对音响：有音效灯效和 40 小时续航，麦克风吉他都能一包带走。街头艺人和露营党的新大件 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。
+
+【男】展开说说？
+
+【女】接着说。
+
+【男】用 Option 给 macOS 操作加点料。Option 做的就和它图标 ⌥ 所展示的那样——展示菜单和选项的另一面。查看全文
 
 【女】展开说说？
 
-【男】还有一条。
+【男】接着说。
 
-【女】iPhone Air 当主力机用了三个多月后，我为什么还是换不掉它。但恰恰是这些取舍让我重新开始思考：什么才是真正重要的体验。查看全文
+【女】新手日记的「为什么」与「写什么」。如何迈出日常写作的第一步？查看全文
 
-【男】这怎么讲？
-
-【女】再来看这个。
-
-【男】ES9 开始交付，蔚来品牌「轻舟已过万重山」。蔚来走完了最难的一段路。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。
-
-【女】展开说说？
-
-【男】还有一条。
-
-【女】GTA 6 没有杀死实体游戏，因为它已经死了。实体游戏，将何去何从？ #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。
-
-【男】这怎么讲？
+【男】嗯，然后呢？
 
 【女】今天的金句时间到了。
 
