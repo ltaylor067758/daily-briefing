@@ -4,143 +4,143 @@
 
 【男】先从国内开始。
 
-【男】《中医药振兴发展“十五五”规划》发布。36氪获悉，国家中医药管理局、国家发展和改革委员会印发《中医药振兴发展“十五五”规划》。到2030年，覆盖全民和全生命周期的中医药服务体系更加健全，中医药防治重大疾病取得新突破，基层服务提质升级，基础研究能力大幅提升，中药产业创新创造力大幅增强，中医药文化与国际影响力进一步提升，中医药振兴发展迈上新
+【男】韩国7月31日起将杠杆ETF交易的现金存款要求提高至3000万韩元。韩国金融服务委员会发布声明称，韩国将把针对散户投资者交易单一个股杠杆ETF的更严格存款额要求提前至7月31日实施，较原定的8月实施时间提前，存款额要求为3000万韩元，且为现金形式。现金存款要求由1000万韩元提高至3000万韩元；股票、ETF和债券将不再计入最低存款额。新规适用于购买韩国国内及海外
 
 【女】这怎么讲？
 
 【男】再来看这个。
 
-【女】对话蚂蚁数科：打造商业智能体超级工厂，生态共建中国行业版Harness标准。7月17日，2026世界人工智能大会（WAIC）在上海开幕。作为36氪连续第三年深入WAIC现场的重要内容窗口，「氪话未来」直播间也在大会首日同步开启现场对话。蚂蚁数科副总裁、中国区业务发展部总经理孙磊在WAIC现场接受36氪「氪话未来」特邀专访，围绕商业智能体超级工厂、行业垂直大模型、AI工程化能
+【女】英伟达与Amkor达成15亿美元芯片封装与测试合作协议。美国半导体产品封装和测试服务提供商Amkor Technology当地时间7月23日宣布，与英伟达达成15亿美元多年期合作协议，共同开发面向下一代人工智能和加速计算平台的先进半导体封装与测试技术。根据协议，英伟达将提供预付款，支持Amkor在美国扩充先进封装产能。（界面）
 
-【男】展开说说？
-
-【女】接着说。
-
-【男】韩国财政部：2026年或实现3%的GDP增速。韩国财政部7月23日在声明中表示，得益于第二季度的强劲表现，韩国2026年或实现3%的GDP增速。（界面）
-
-【女】嗯，然后呢？
-
-【男】还有一条。
-
-【女】积极运用AI技术，我国企业数字化采购渗透率逐年提高。中国物流与采购联合会昨天发布《2026数智化采购发展报告》。根据报告，我国企业的数字化采购渗透率持续提升，为从招标、投标到采购、履约的全周期数字化管理创造条件。据介绍，涵盖工业、建筑业和零售批发业在内，2025年全国企业物资采购总额达196.3万亿元，同比增长4%，市场在高位运行中保持稳健扩张。其中
-
-【男】这怎么讲？
+【男】嗯，然后呢？
 
 【女】还有一条。
 
-【男】东山精密回应索尔思光电光模块产品失窃：已就相关产品足额投保货物运输险。36氪获悉，东山精密在互动平台表示，公司子公司索尔思光电在2026年6月有一批光模块产品在运输过程中发生了损失，公司于第一时间报警并通知货物运输险的承保方。经确认，公司已经就相关产品足额投保了货物运输险，公司综合保险条款、保险专家意见判断本次出险预计能够得到足额赔付。经公司预估，本批次货值损失不会对
-
-【女】嗯，然后呢？
-
-【男】再来看这个。
-
-【女】国泰航空预计2026年上半年利润60亿-65亿港元，载客量同比增长17%。36氪获悉，国泰集团近日公布2026年上半年财务状况及客、货运量数据。集团预计上半年利润为60亿至65亿港元，2025年同期约为37亿港元。其中，国泰航空上半年载客量较2025年同期增加17%，载货量较去年同期增加9%；香港快运载客量较去年同期增加10%。国泰航空与香港快运6月合共载客超过310万人
-
-【男】这怎么讲？
-
-【女】再来看这个。
-
-【男】36氪首发 | 前华尔街投资人下场造“手”，以“自研视触觉+软硬闭环”破解行业数据难题。图源/企业 本文约2100字，建议阅读5分钟 作者丨欧雪 编辑丨袁斯来 硬氪获悉，机器人灵巧操作方案提供商拾玥科技（LumiBot）近日完成数千万元天使轮融资。本轮由常州智融长优股权投资合伙企业（有限合伙）领投，另外两家国有投资平台旗下基金跟投。资金将主要用于团队扩张、产品迭代与小批量产线建设，以及
+【男】中信建投：淡季不淡旺季可期，锂价有望低位反升。36氪获悉，中信建投证券研报指出，由于锂价近期快速下行，上游惜售情绪加重，挺价明显，部分散单报价仍维持在16万元/吨以上；同时下游逢低采购，材料厂15万元/吨以下的采购情绪较为积极，但采购行为依然谨慎，整体以刚需为主。供给端，碳酸锂产量下行，部分锂盐厂按计划进入检修，导致锂辉石产线减量明显。需求方面
 
 【女】嗯，然后呢？
 
 【男】还有一条。
 
-【女】36氪首发 | 同济博士做几何、物理AI重构设计制造，累计获超3亿元融资。图源/企业 本文约1400字，建议阅读3分钟 作者丨欧雪 编辑丨袁斯来 硬氪获悉，工业AI设计研发解决方案供应商「设序科技」于近日正式完成B轮超亿元融资，累计获超3亿元融资，投资方包括深产投、合鼎共及老股东涌铧投资等。融资将用于市场开拓（含出海）及核心模型技术研发。 设序科技成立于2020年，旗下产
+【女】拉加德承诺2027年前不会卸任，欧洲央行新行长遴选或很快启动。欧洲央行行长克里斯蒂娜·拉加德承诺至少2027年前不会卸任，这是她迄今对于去留发出的最明确信号，表明各国政府可能很快需要物色继任者。如果拉加德选择在2027年离任，法国总统埃马纽埃尔·马克龙将能够参与继任者遴选，而不是把这项事务留给春季选举后接替他的人。（新浪财经）
 
-【男】展开说说？
-
-【男】Why Abderrahim Fakir’s death reignited Italy’s police accountability debate。A Moroccan-born man’s death in Bologna has prompted anger and renewed scrutiny of Italy’s policing and legal reforms
-
-【女】嗯，然后呢？
-
-【男】接着说。
-
-【女】Spain and France battle raging wildfires, face high risk of more。A wildfire in Spain's Guadalajara region has burned 32,000 hectares, in one of the country's largest recorded blazes
-
-【男】展开说说？
+【男】嗯，然后呢？
 
 【女】接着说。
 
-【男】US tariffs ‘strengthen’ Lula against Bolsonaro’s son in upcoming elections。With Lula polling ahead and tariffs squeezing Brazil's economy, the Bolsonaro family's Washington strategy is faltering
-
-【女】这怎么讲？
-
-【男】再来看这个。
-
-【女】US House passes $1.15 trillion military bill expanding Israel cooperation。Bill to fund war on Iran and a handful of Trump priorities passes largely along party lines, faces Senate uncertainty
-
-【男】展开说说？
-
-【女】再来看这个。
-
-【男】AI, China, ‘dark factories’ and the future of the US auto industry。Economist Mary Lovely dismisses the claims that getting automakers to produce more cars in America proves tariffs work
+【男】头部险资机构拥抱硬科技，全行业转型仍需多方合力。在利率中枢下移、“利差损”压力凸显的当下，头部险企正从传统的固收业务中突围，尝试将“长钱”转化为支持科创的“耐心资本”。与此同时，不少中小机构受制于风险偏好、偿付能力及投研门槛，科技投资的参与程度仍然较低。业内人士表示，要让保险资金真正成为滋养科技创新的源头活水，仍需要监管部门、行业、市场形成合力，
 
 【女】展开说说？
 
 【男】再来看这个。
 
-【女】Iran war live: US launches new attacks; Houthis attack 2 Saudi oil tankers。US and Iran trade new threats as more explosions are reported in Iranian cities, including Sirik, Ahvaz and Bushehr
-
-【男】这怎么讲？
-
-【女】还有一条。
-
-【男】Austrian home where Hitler was born reopened as police station。For decades, neo-Nazis and far-right extremists flocked to the Austrian home where Adolf Hitler
-
-【女】这怎么讲？
-
-【男】还有一条。
-
-【女】Yemen’s Houthis claim attack on two Saudi oil tankers。Claimed attacks come days after Houthis announced naval embargo on Saudi vessels
-
-【男】这怎么讲？
-
-【男】派早报：三星发布多款折叠屏新品、索尼发布 FX5 电影摄影机等。OpenAI 发布面向企业用户的 OpenAI Presence，耐克宣布重构大中华区市场生态等。查看全文
-
-【女】嗯，然后呢？
-
-【男】接着说。
-
-【女】上海这场大赛有点“野”：让AI自主科研、控核聚变、认甲骨文。为科研OPC创业者铺就“最后一公里”
+【女】氪星晚报 ｜DeepSeek今年已增资65%；马斯克：FSD是拉动特斯拉汽车需求的核心驱动力。大公司： DeepSeek今年已增资65% 36氪获悉，据媒体报道，近日，DeepSeek创始人梁文锋一场4小时的投资人闭门会议实录在科技与创投圈刷屏，他明确表示“DeepSeek只有一条主线，即通往通用人工智能（AGI）”，相关话题引发关注。天眼查App显示，DeepSeek关联公司杭州深度求索成
 
 【男】展开说说？
 
-【女】接着说。
+【女】还有一条。
 
-【男】早报｜12999起,首台安卓阔折叠发布/曝苹果MacBook将迎全线更新/小红书否认IPO相关传闻。· AMD 与 Anthropic 达成数百亿美元 AI 服务器合作 · 台积电拟于 2027 年上调芯片代工价格，最高涨幅 10% · Claude Cowork 可通过录屏学习并保存可复用 Skill #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。
-
-【女】嗯，然后呢？
-
-【男】还有一条。
-
-【女】美图拿出1亿元，面向全行业寻找AI影像Builder。美图产品挑战赛（Meitu Hatch Catch）火热报名中
-
-【男】这怎么讲？
-
-【女】接着说。
-
-【男】29.98 万元起、800mm 涉水，泰钽 700 还想让 NOA 帮你越野。NOA 向着山野进发。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。
+【男】网格智算：“不堆算力”的AI大脑如何填补林下场景空白 | 水下项目。从消费市场到工业赛道，一片“红海”的无人机市场早已挤满各路玩家，但仍有一块细分领域，即便行业头部厂商也鲜有布局——林下场景。 林下场景蕴藏的产业需求体量惊人：根据国家林草局数据，2025年我国森林蓄积量达209.88亿立方米，全国木材产量达1.4亿立方米；联合国粮农组织数据显示，全球圆木年采伐量约4
 
 【女】嗯，然后呢？
 
 【男】再来看这个。
 
-【女】Parti：一个零门槛联机游戏平台，凭什么不需要服务器？。Matrix首页推荐Matrix是少数派的写作社区，我们主张分享真实的产品体验，有实用价值的经验与思考。我们会不定期挑选Matrix最优质的文章，展示来自用户的最真实的体验和观点。文章代表作者个人观点 ...查看全文
+【女】专访郭列：做出脸萌、FaceU、剪映等爆款后，他第一次阐释如何在AI时代做产品。文｜周鑫雨 编辑｜张雨忻 什么样画像的AI创业者会饱受瞩目？不同投资人心里或许有不同的答案，但其中一个答案一定是：剪映系。 陈冕，Lovart、LibTV等热门创作工具的缔造者；明超平，AI Coding社区YouWare的创始人，2025年一级市场最火的95后；闹闹，其打造的AI视频创作工具Oii
 
-【男】这怎么讲？
+【男】展开说说？
+
+【男】How the Houthi Red Sea blockade will impact the world。The Houthis' blockade of Bab al-Mandeb threatens a vital global trade route
+
+【女】展开说说？
+
+【男】接着说。
+
+【女】Arab and Muslim countries condemn Israeli storming of Al-Aqsa Mosque。Israeli settlers' storming of Islam's holy site fuels 'hatred' and obstructs lasting peace, joint statement says
+
+【男】展开说说？
 
 【女】还有一条。
 
-【男】滤镜背后的色彩科学：LUT 是什么？。从风格滤镜，到电影中的专业调色，聊聊 LUT 所代表的色彩规则。查看全文
+【男】Is this Italy’s ‘George Floyd moment’?。The death of Moroccan-born Abderrahim Fakir after he was restrained by police in Bologna has sparked protests
 
-【女】这怎么讲？
+【女】嗯，然后呢？
+
+【男】再来看这个。
+
+【女】US war on Iran: The $110 billion price tag。America's war on Iran has cost the US nearly $110 billion. Now, the Trump administration wants another $67 billion
+
+【男】展开说说？
+
+【女】再来看这个。
+
+【男】Trump warns of largest strikes on Iran yet as Tehran lashes out across Gulf。The US president's threat comes after another day of Iranian attacks on Bahrain, Kuwait and Jordan
+
+【女】展开说说？
 
 【男】还有一条。
 
-【女】Halliday发布第二代AI眼镜Halliday G2，AI功能走向“实时参与会议”。通过Meeting Flow让实时智能融入会议与商务沟通场景
+【女】US-Saudi nuclear deal hinges on normalisation with Israel。President Trump said a proposed US-Saudi civilian nuclear deal is subject to Saudi Arabia joining the Abraham Accords
 
 【男】这怎么讲？
+
+【女】接着说。
+
+【男】Rally attendee steals the show by mimicking Trump’s gestures。A rally attendee seated directly behind Trump drew attention by mimicking the president
+
+【女】嗯，然后呢？
+
+【男】再来看这个。
+
+【女】France wildfires force evacuation of over 20,000 people from tourist town。About 800 firefighters and hundreds of gendarmes and soldiers deployed to battle the flames west of Bordeaux
+
+【男】嗯，然后呢？
+
+【男】First 超短片，把镜头对准了 AI 够不着的地方。如果一切皆可生成，影像的「真实」与「必要」又该被如何重新定义？ #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。
+
+【女】嗯，然后呢？
+
+【男】再来看这个。
+
+【女】苹果全家桶「年年焕新」来了，到底划不划算？。苹果可能要改变大伙儿买苹果全家桶的方式了。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。
+
+【男】这怎么讲？
+
+【女】接着说。
+
+【男】苹果 Mac 将迎来全线换代，一种给人用，一种给 AI 用。你的换电脑动力是什么？ #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。
+
+【女】嗯，然后呢？
+
+【男】还有一条。
+
+【女】新玩意 247｜少数派的编辑们最近买了啥？。关于栏目很多读者都会好奇少数派的编辑们到底平时都「买了啥」。我们希望通过「编辑部的新玩意」介绍编辑部成员们最近在用的新奇产品，让他们自己来谈谈这些新玩意的使用体验究竟如何。@Lotta：海备思文件夹读 ...查看全文
+
+【男】这怎么讲？
+
+【女】接着说。
+
+【男】小小云台，稳住「口袋电影机」：DJI Pocket 4P 漫谈。Pocket 一体式云台相机满是让人不容小觑的护城河与想象空间。查看全文
+
+【女】展开说说？
+
+【男】再来看这个。
+
+【女】超越π0，中国团队用1B参数模型登顶具身智能榜单。具身智能正在从「参数竞赛」进入「架构竞赛」。
+
+【男】嗯，然后呢？
+
+【女】再来看这个。
+
+【男】趋境科技华东区域总部落地钱江世纪城，五年内建成万卡级高品质 AI Token 工厂。推进华东区域业务布局的重要一步
+
+【女】这怎么讲？
+
+【男】接着说。
+
+【女】让 Windows 顺眼又省心：我的新设备配置经验。Matrix首页推荐Matrix是少数派的写作社区，我们主张分享真实的产品体验，有实用价值的经验与思考。我们会不定期挑选Matrix最优质的文章，展示来自用户的最真实的体验和观点。文章代表作者个人观点 ...查看全文
+
+【男】展开说说？
 
 【女】今天的金句时间到了。
 
